@@ -3,7 +3,7 @@ use argon2::{
     Argon2, Algorithm, Version,
 };
 
-use crate::config;
+use crate::env;
 
 pub async fn hash(input: &String) -> Result<String, Error> {
     let salt = SaltString::generate(&mut OsRng);
@@ -11,7 +11,7 @@ pub async fn hash(input: &String) -> Result<String, Error> {
     let argon2 = Argon2::new(
         Algorithm::Argon2id, 
         Version::V0x13,      
-        config::ARGON2_PARAMS?,              
+        env::ARGON2_PARAMS?,              
     );
 
     let password_hash = argon2.hash_password(input.as_bytes(), &salt)?.to_string();

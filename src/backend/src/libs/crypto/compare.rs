@@ -4,14 +4,14 @@ use argon2::{
     }, Algorithm, Argon2, Version
 };
 
-use crate::config;
+use crate::env;
 
 pub async fn compare(input: &String, hash: &String) -> Result<bool, Error> {
 
     let argon2 = Argon2::new(
         Algorithm::Argon2id, 
         Version::V0x13,      
-        config::ARGON2_PARAMS?,              
+        env::ARGON2_PARAMS?,              
     );
 
     let parsed_hash = PasswordHash::new(hash)?;

@@ -1,4 +1,4 @@
-use crate::{config, libs::db::{get_pool::get_pool, queries}};
+use crate::{env::ENV, libs::db::{get_pool::get_pool, queries}};
 
 
 pub async fn init_tables() -> Result<(), sqlx::Error> {
@@ -10,7 +10,7 @@ pub async fn init_tables() -> Result<(), sqlx::Error> {
         sqlx::query(query).execute(pool).await?;
     }
 
-    println!("Database '{}' created or already exists!", config::DB_NAME);
+    println!("Database '{}' created or already exists!", ENV.db_name);
 
     Ok(())
 

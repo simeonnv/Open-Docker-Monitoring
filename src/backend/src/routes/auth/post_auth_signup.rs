@@ -6,6 +6,9 @@ use crate::{error::Error, libs::{auth::{create_account::create_account, create_t
 
 #[derive(Serialize, Deserialize)]
 pub struct Req {
+    pub env_username: String,
+    pub env_password: String,
+
     pub username: String,
     pub password: String,
 }

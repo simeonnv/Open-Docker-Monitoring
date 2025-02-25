@@ -1,8 +1,8 @@
 FROM rust as build
 
 # create a new empty shell project
-RUN USER=root cargo new --bin hackaton_backend
-WORKDIR /hackaton_backend
+RUN USER=root cargo new --bin odm_backend
+WORKDIR /odm_backend
 
 # copy over your manifests
 COPY ./Cargo.toml ./Cargo.toml
@@ -15,14 +15,14 @@ RUN rm src/*.rs
 COPY ./src ./src
 
 # build for release
-RUN rm ./target/release/deps/hackaton_backend*
+RUN rm ./target/release/deps/odm_backend*
 RUN cargo build --release
 
 # our final base
 FROM rust
 
 # copy the build artifact from the build stage
-COPY --from=build /hackaton_backend/target/release/hackaton_backend .
+COPY --from=build /odm_backend/target/release/odm_backend .
 
 # set the startup command to run your binary
-CMD ["./hackaton_backend"]
+CMD ["./odm_backend"]

@@ -1,21 +1,21 @@
 services:
-  hackaton_backend:
+  odm_backend:
     build: ./src/backend
     ports:
       - "6004:6004"
     volumes:
-      - hackaton:/usr/src/hackaton_backend
+      - odm:/usr/src/odm_backend
       - /var/run/docker.sock:/var/run/docker.sock 
       - /usr/bin/docker:/usr/bin/docker
       - //./pipe/docker_engine://./pipe/docker_engine
     depends_on:
-      - hackaton_database
+      - odm_database
     environment:
       - RUST_LOG=info
     networks:
       - main
 
-  hackaton_frontend:
+  odm_frontend:
     build: ./src/frontend
     ports:
       - "7004:7004"
@@ -23,13 +23,11 @@ services:
       - ./src/frontend:/app
       - /app/node_modules
     depends_on:
-      - hackaton_backend
+      - odm_backend
     networks:
       - main
-    environment:
-      - API_URL=http://backend_service:6004
 
-  hackaton_database:
+  odm_database:
     image: postgres:latest
     ports:
       - "5004:5432"
@@ -37,15 +35,14 @@ services:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DATABASE=my_database
     volumes:
-      - hackaton:/var/lib/postgres
+      - odm:/var/lib/postgres
     networks:
       - main
 
-
 volumes:
-  hackaton: 
+  odm: 
     external: true
 
 networks:
   main:
-    external: true 
+    external: true

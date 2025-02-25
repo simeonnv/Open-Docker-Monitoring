@@ -5,7 +5,16 @@ export default defineNuxtConfig({
 
     timeline: {
       enabled: true
+    },
+
+    vscode: {
+      port: 3090
     }
+  },
+
+  sourcemap: {
+    server: true,
+    client: true
   },
 
   ssr: true,

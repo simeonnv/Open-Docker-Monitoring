@@ -1,5 +1,6 @@
 
 use actix_cors::Cors;
+use env::ENV;
 // use libs::auth::create_account::create_account;
 use libs::{auth::create_account::create_account, db, docker};
 use routes::{auth::auth, files::files, docker::docker};
@@ -12,7 +13,7 @@ use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
 pub mod api_docs;
-pub mod config;
+pub mod env;
 pub mod error;
 pub mod libs;
 pub mod routes;
@@ -63,7 +64,7 @@ async fn main() -> std::io::Result<()> {
 
             .service(SwaggerUi::new("/{_:.*}").url("/api-docs/openapi.json", api_docs::ApiDoc::openapi()))
     })
-    .bind((config::LISTENING_ON, config::PORT))?
+    .bind((ENV.listening_on.clone(), ENV.port))?
     .run()
     .await
 }

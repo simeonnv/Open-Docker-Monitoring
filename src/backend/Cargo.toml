@@ -1,5 +1,5 @@
 [package]
-name = "hackaton_backend"
+name = "odm_backend"
 version = "0.1.0"
 edition = "2021"
 
@@ -25,3 +25,5 @@ serde_json = "1.0.139"
 actix-rt = "2.10.0"
 futures-util = "0.3.31"
 futures = "0.3.31"
+lazy_static = "1.5.0"
+dotenv = "0.15.0"
