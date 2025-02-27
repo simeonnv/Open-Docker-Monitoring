@@ -1,4 +1,4 @@
-use std::fmt;
+use std::{fmt, sync::PoisonError};
 
 use actix_web::{HttpResponse, ResponseError};
 use serde::{Deserialize, Serialize};
@@ -88,6 +88,12 @@ impl From<password_hash::Error> for Error {
 impl From<bollard::errors::Error> for Error {
     fn from(err: bollard::errors::Error) -> Self {
         Error::Internal(format!("Docker error: {}", err))
+    }
+}
+
+impl<T> From<PoisonError<T>> for Error {
+    fn from(err: PoisonError<T>) -> Self {
+        Error::Internal(format!("Multithread error, POISONED: {}", err))
     }
 }
 

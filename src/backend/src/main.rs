@@ -2,8 +2,8 @@
 use actix_cors::Cors;
 use env::ENV;
 // use libs::auth::create_account::create_account;
-use libs::{auth::create_account::create_account, db, docker};
-use routes::{auth::auth, files::files, docker::docker};
+use libs::{db, docker};
+use routes::routes;
 use tokio::sync::OnceCell;
 
 use actix_web::{middleware::Logger, web::PayloadConfig, App, HttpServer};
@@ -58,9 +58,7 @@ async fn main() -> std::io::Result<()> {
             
             .app_data(PayloadConfig::new(64 * 1024 * 1024)) // the max upload is 32mb the voices
 
-            .service(auth())
-            .service(files())
-            .service(docker())
+            .service(routes())
 
             .service(SwaggerUi::new("/{_:.*}").url("/api-docs/openapi.json", api_docs::ApiDoc::openapi()))
     })

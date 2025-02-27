@@ -17,12 +17,23 @@ export default defineNuxtConfig({
     client: true
   },
 
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag === 'u-header' // Adjust tag name if needed
+    }
+  },
+
   ssr: true,
   
   devServer: {
     port: 7004 // Set the port for development
   },
 
+  colorMode: {
+    preference: 'system', // default
+    fallback: 'light',
+    classSuffix: '',
+  },
 
 
   modules: [
@@ -33,7 +44,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/icon",
     "@nuxt/eslint",
-    // "@nuxt/content",
+    "@nuxt/content",
     "@nuxt/fonts",
     "@vueuse/nuxt"
   ],

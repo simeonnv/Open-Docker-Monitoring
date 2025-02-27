@@ -12,6 +12,9 @@ pub struct Env {
     pub db_name: String,
     pub db_username: String,
     pub db_password: String,
+
+    pub init_username: String,
+    pub init_password: String
 }
 
 pub const ARGON2_PARAMS: Result<Params, argon2::Error> = Params::new(
@@ -38,6 +41,8 @@ pub fn load_config() -> Env {
         db_name: env::var("DB_NAME").unwrap_or("my_database".to_string()),
         db_username: env::var("DB_USERNAME").unwrap_or("postgres".to_string()),
         db_password: env::var("DB_PASSWORD").unwrap_or("root".to_string()),
+        init_username: env::var("INIT_PASSWORD").unwrap_or("root".to_string()),
+        init_password: env::var("INIT_PASSWORD").unwrap_or("root".to_string()),
     }
 }
 
