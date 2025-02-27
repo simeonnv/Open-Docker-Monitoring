@@ -10,8 +10,10 @@ services:
       - //./pipe/docker_engine://./pipe/docker_engine
     depends_on:
       - odm_database
-    environment:
-      - RUST_LOG=info
+    env_file:
+      - .env
+    # environment:
+    #   - RUST_LOG=info
     networks:
       - main
 
@@ -24,6 +26,8 @@ services:
       - /app/node_modules
     depends_on:
       - odm_backend
+    env_file:
+      - .env
     networks:
       - main
 
@@ -31,11 +35,14 @@ services:
     image: postgres:latest
     ports:
       - "5004:5432"
-    environment:
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DATABASE=my_database
+    # environment:
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=root
+    #   - POSTGRES_DATABASE=my_database
     volumes:
       - odm:/var/lib/postgres
+    env_file:
+      - .env
     networks:
       - main
 

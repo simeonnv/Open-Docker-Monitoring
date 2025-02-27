@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   ssr: true,
   
   devServer: {
-    port: 7004 // Set the port for development
+    port: process.env.FRONTEND_PORT !== undefined ? parseInt(process.env.FRONTEND_PORT) : 7004 // Set the port for development
   },
 
   colorMode: {
@@ -46,7 +46,8 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/content",
     "@nuxt/fonts",
-    "@vueuse/nuxt"
+    "@vueuse/nuxt",
+    '@pinia/nuxt'
   ],
   
   compatibilityDate: "2025-02-25"

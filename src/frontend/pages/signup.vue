@@ -1,35 +1,37 @@
 <script setup>
-import { ref } from 'vue'
 
-// Reactive variables for form inputs
-const userForm = reactive({
-    email: '',
-    password: '',
-})
+import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
+import { useAuthStore } from '../stores/auth'; // import the auth store we just created
 
-const { data, status, error, execute, clear } = await useFetch('http://localhost:6004/login', {
-    method: "POST",
-    lazy: true,
-    immediate: false,
-    default: null,
-    server: false,
-    body: {
-        username: userForm.email,
-        password: userForm.password
-    }
-})
+const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
+
+const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+
+const user = ref({
+  username: 'kminchelle', 
+  password: '0lelplR',
+});
+const router = useRouter();
+
+const login = async () => {
+  await authenticateUser(user.value); // call authenticateUser and pass the user object
+  // redirect to homepage if user is authenticated
+  if (authenticated) {
+    router.push('/');
+  }
+};
 
 </script>
 
 <template>
   <div>
     <h2>Login</h2>
-    <form @submit.prevent="handleLogin">
+    <form>
       <div>
         <label for="email">Email:</label>
         <input
           id="email"
-          v-model="userForm.email"
+          v-model="user.username"
           type="email"
           placeholder="Enter your email"
           required
@@ -39,7 +41,7 @@ const { data, status, error, execute, clear } = await useFetch('http://localhost
         <label for="password">Password:</label>
         <input
           id="password"
-          v-model="userForm.password"
+          v-model="user.password"
           type="password"
           placeholder="Enter your password"
           required
@@ -48,7 +50,7 @@ const { data, status, error, execute, clear } = await useFetch('http://localhost
 
       <p>{{ data, status, error }}</p>
 
-      <button @click="execute" type="submit">
+      <button @click="login" type="button">
         log
       </button>
     </form>

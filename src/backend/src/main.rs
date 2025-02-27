@@ -62,7 +62,7 @@ async fn main() -> std::io::Result<()> {
 
             .service(SwaggerUi::new("/{_:.*}").url("/api-docs/openapi.json", api_docs::ApiDoc::openapi()))
     })
-    .bind((ENV.listening_on.clone(), ENV.port))?
+    .bind(("0.0.0.0", ENV.backend_port))?
     .run()
     .await
 }

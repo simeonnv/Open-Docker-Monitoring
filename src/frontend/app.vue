@@ -1,6 +1,7 @@
 <template>
-  <div class="divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900 min-h-screen">
+  <div class="bg-white dark:bg-gray-900 min-h-screen">
     <MainHeader />
+
     <UContainer>
       <UCard class="mt-10">
         <template #header>
