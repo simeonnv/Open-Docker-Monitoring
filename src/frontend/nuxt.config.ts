@@ -48,6 +48,6 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@vueuse/nuxt"
   ],
-
+  
   compatibilityDate: "2025-02-25"
 })
