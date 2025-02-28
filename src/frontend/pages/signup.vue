@@ -8,16 +8,18 @@ const { Login } = useAuthStore(); // use authenticateUser action from  auth stor
 const { authenticated, responce } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
 const user = ref({
-  username: 'kminchelle', 
-  password: '0lelplR',
+  username: '', 
+  password: '',
 });
 const router = useRouter();
 
 const signup = async () => {
-  await Login(user.value); // call authenticateUser and pass the user object
-  // redirect to homepage if user is authenticated
+  console.error("AUTHED?: ", authenticated.value)
+  await Login(user.value);
+  console.error("AUTHED?: ", authenticated.value)
+
   console.log("RESPONCE: ", responce.value)
-  if (authenticated) {
+  if (authenticated.value) {
     router.push('/');
   }
 };

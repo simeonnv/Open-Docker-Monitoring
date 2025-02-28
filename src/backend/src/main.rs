@@ -60,7 +60,6 @@ async fn main() -> std::io::Result<()> {
 
             .service(routes())
 
-            .service(SwaggerUi::new("/{_:.*}").url("/api-docs/openapi.json", api_docs::ApiDoc::openapi()))
     })
     .bind(("0.0.0.0", ENV.backend_port))?
     .run()

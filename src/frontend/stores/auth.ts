@@ -35,6 +35,7 @@ export const useAuthStore = defineStore('auth', {
     async Signup({ username, password, key }: SignupPayloadInterface) {
       const config = useRuntimeConfig();
       console.log("ENV: ", config.public);
+      console.log("ADDRESS: ", `${config.public.backendPublicAddress}:${config.public.backendPort}/auth/signup`)
       const { data, error, pending }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/signup`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -46,19 +47,22 @@ export const useAuthStore = defineStore('auth', {
       });
       this.loading = pending;
       console.log(data);
+      const token = useCookie('token');
 
       if (data.value) {
-        const token = useCookie('token');
         this.responce = data.value
         token.value = data?.value?.data;
         this.authenticated = true;
       } else {
-        this.responce = error.value
+        token.value = null
+        this.authenticated = false;
+        this.responce = error.value.data
       }
     },
     async Login({ username, password }: LoginPayloadInterface) {
       const config = useRuntimeConfig();
       console.log("ENV: ", config.public);
+      console.log("ADDRESS: ", `${config.public.backendPublicAddress}:${config.public.backendPort}/auth/signup`)
       const { data, pending, error }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/login`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
@@ -71,13 +75,15 @@ export const useAuthStore = defineStore('auth', {
       // console.log("DATA: ", data);
       // console.log("ERROR: ", error);
       // console.log("DATA: ", data.value);
+      const token = useCookie('token');
 
       if (data.value) {
-        const token = useCookie('token');
         this.responce = data.value
         token.value = data?.value?.data;
         this.authenticated = true;
       } else {
+        token.value = null
+        this.authenticated = false;
         this.responce = error.value.data
       }
     },
@@ -85,6 +91,20 @@ export const useAuthStore = defineStore('auth', {
       const token = useCookie('token');
       this.authenticated = false;
       token.value = null;
+    },
+    async ValidateAuth() {
+      const config = useRuntimeConfig();
+      const token = useCookie('token');
+      const { data, pending, error }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/validate`, {
+        method: 'get',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer: ${token}` 
+        }
+      });
+      if (error.value) {
+        this.Logout()
+      }
     },
   },
 });
