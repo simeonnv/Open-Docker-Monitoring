@@ -2,7 +2,7 @@
 use actix_cors::Cors;
 use env::ENV;
 // use libs::auth::create_account::create_account;
-use libs::{db, docker};
+use libs::{auth::create_account::create_account, db, docker};
 use routes::routes;
 use tokio::sync::OnceCell;
 
@@ -33,7 +33,7 @@ async fn main() -> std::io::Result<()> {
     docker::init_docker::init_docker().await.expect("Failed to initialize docker");
 
 
-    // let _ = create_account(&"admin".to_string(), &"admin".to_string(), "admin").await;
+    let _ = create_account(&"admin".to_string(), &"admin".to_string(), "admin").await;
     
     
 

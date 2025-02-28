@@ -1,22 +1,65 @@
-// store/auth.ts
-
 import { defineStore } from 'pinia';
 
-interface UserPayloadInterface {
+interface SignupPayloadInterface {
+  username: string;
+  password: string;
+  key: string;
+}
+
+interface LoginPayloadInterface {
   username: string;
   password: string;
 }
 
+interface Responce {
+  status: string;
+  data: string;
+}
+
+type useAuthState = {
+  authenticated: boolean;
+  responce: Responce; // Updated to allow empty object
+  loading: boolean;
+};
+
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
+  state: (): useAuthState => ({
     authenticated: false,
+    responce: {
+      status: "",
+      data: ""
+    },
     loading: false,
   }),
   actions: {
-    async authenticateUser({ username, password }: UserPayloadInterface) {
-      // useFetch from nuxt 3
-      console.log("ENV: ", process.env)
-      const { data, pending }: any = await useFetch(`https://${process.env.BACKEND_ADDRESS}/auth/login`, {
+    async Signup({ username, password, key }: SignupPayloadInterface) {
+      const config = useRuntimeConfig();
+      console.log("ENV: ", config.public);
+      const { data, error, pending }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/signup`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: {
+          username,
+          password,
+          key,
+        },
+      });
+      this.loading = pending;
+      console.log(data);
+
+      if (data.value) {
+        const token = useCookie('token');
+        this.responce = data.value
+        token.value = data?.value?.data;
+        this.authenticated = true;
+      } else {
+        this.responce = error.value
+      }
+    },
+    async Login({ username, password }: LoginPayloadInterface) {
+      const config = useRuntimeConfig();
+      console.log("ENV: ", config.public);
+      const { data, pending, error }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/login`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: {
@@ -25,17 +68,23 @@ export const useAuthStore = defineStore('auth', {
         },
       });
       this.loading = pending;
+      // console.log("DATA: ", data);
+      // console.log("ERROR: ", error);
+      // console.log("DATA: ", data.value);
 
       if (data.value) {
-        const token = useCookie('token'); // useCookie new hook in nuxt 3
-        token.value = data?.value?.token; // set token to cookie
-        this.authenticated = true; // set authenticated  state value to true
+        const token = useCookie('token');
+        this.responce = data.value
+        token.value = data?.value?.data;
+        this.authenticated = true;
+      } else {
+        this.responce = error.value.data
       }
     },
-    logUserOut() {
-      const token = useCookie('token'); // useCookie new hook in nuxt 3
-      this.authenticated = false; // set authenticated  state value to false
-      token.value = null; // clear the token cookie
+    Logout() {
+      const token = useCookie('token');
+      this.authenticated = false;
+      token.value = null;
     },
   },
 });

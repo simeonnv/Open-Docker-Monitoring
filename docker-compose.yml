@@ -21,13 +21,14 @@ services:
     build: ./src/frontend
     ports:
       - "7004:7004"
+      - "4000:4000"
     volumes:
       - ./src/frontend:/app
       - /app/node_modules
     depends_on:
       - odm_backend
     env_file:
-      - .env
+      - .env.docker
     networks:
       - main
 

@@ -3,9 +3,9 @@
 import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
 import { useAuthStore } from '../stores/auth'; // import the auth store we just created
 
-const { authenticateUser } = useAuthStore(); // use authenticateUser action from  auth store
+const { Login } = useAuthStore(); // use authenticateUser action from  auth store
 
-const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+const { authenticated, responce } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
 const user = ref({
   username: 'kminchelle', 
@@ -13,9 +13,10 @@ const user = ref({
 });
 const router = useRouter();
 
-const login = async () => {
-  await authenticateUser(user.value); // call authenticateUser and pass the user object
+const signup = async () => {
+  await Login(user.value); // call authenticateUser and pass the user object
   // redirect to homepage if user is authenticated
+  console.log("RESPONCE: ", responce.value)
   if (authenticated) {
     router.push('/');
   }
@@ -50,7 +51,7 @@ const login = async () => {
 
       <p>{{ data, status, error }}</p>
 
-      <button @click="login" type="button">
+      <button @click="signup" type="button">
         log
       </button>
     </form>

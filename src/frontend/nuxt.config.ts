@@ -35,6 +35,19 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
+  runtimeConfig: {
+    public: {
+      // postgresUser: process.env.POSTGRES_USER,
+      // postgresPassword: process.env.POSTGRES_PASSWORD,
+      // postgresDatabase: process.env.POSTGRES_DATABASE,
+      // postgresAddress: process.env.POSTGRES_ADDRESS,
+      backendPort: process.env.BACKEND_PORT,
+      backendAddress: process.env.BACKEND_ADDRESS,
+      backendPublicAddress: process.env.BACKEND_PUBLIC_ADDRESS,
+      frontendPort: process.env.FRONTEND_PORT,
+      frontendAddress: process.env.FRONTEND_ADDRESS,
+    }
+  },
 
   modules: [
     "@nuxt/ui",
