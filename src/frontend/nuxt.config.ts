@@ -50,7 +50,6 @@ export default defineNuxtConfig({
   },
 
   modules: [
-    "@nuxt/ui",
     "@nuxtjs/tailwindcss",
     "@nuxt/devtools",
     "@nuxtjs/color-mode",
@@ -60,8 +59,18 @@ export default defineNuxtConfig({
     "@nuxt/content",
     "@nuxt/fonts",
     "@vueuse/nuxt",
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    "shadcn-nuxt"
   ],
   
+  shadcn: {
+    prefix: '',
+    /**
+     * Directory that the component lives in.
+     * @default "./components/ui"
+     */
+    componentDir: './components/ui'
+  },
+
   compatibilityDate: "2025-02-25"
 })

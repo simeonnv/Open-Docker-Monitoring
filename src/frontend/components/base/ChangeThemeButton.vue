@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-center align-middle items-center">
-      <UButton @click="toggleTheme" class="relative flex flex-col justify-center align-middle items-center" color="gray" variant="ghost" square>
+      <Button @click="toggleTheme" class="relative flex flex-col justify-center align-middle items-center p-0.5 !w-fit !h-fit" color="gray" variant="ghost" size="icon">
         <transition name="fade">
           <Icon
             v-if="$colorMode.preference === 'light'"
@@ -17,7 +17,7 @@
         </transition>
         <!-- Invisible spacer to set button size -->
         <Icon class="invisible" :size name="material-symbols:clear-day-rounded" />
-      </UButton>
+      </Button>
     </div>
   </template>
   
