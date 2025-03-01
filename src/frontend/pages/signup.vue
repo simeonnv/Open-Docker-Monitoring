@@ -24,13 +24,19 @@ const signup = async () => {
   }
 };
 
+let nz = ref(1)
+
 </script>
 
 <template>
-
-<div class=" w-full p-[4vw] justify-center align-middle items-center flex">
-  <AuthSignupCard/>
-</div>
-
+  <div class="w-full h-full justify-center align-middle items-center flex">
+    <Button @click="nz = (nz + 1) % 2">
+      +++
+    </Button>
+    <Card class="mx-auto max-w-sm h-96 flex flex-col justify-center" v-auto-animate >
+      <AuthServerOwnershipCardContents v-if="nz === 1"/>
+      <AuthSignupCardContents v-else/>
+    </Card>
+  </div>
 </template>
 

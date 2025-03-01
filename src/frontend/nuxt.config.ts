@@ -60,7 +60,8 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@vueuse/nuxt",
     '@pinia/nuxt',
-    "shadcn-nuxt"
+    "shadcn-nuxt",
+    '@formkit/auto-animate/nuxt'
   ],
   
   shadcn: {

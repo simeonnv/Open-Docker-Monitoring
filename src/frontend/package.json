@@ -28,6 +28,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.2",
     "@vueuse/core": "^12.7.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
