@@ -92,7 +92,7 @@ export const useAuthStore = defineStore('auth', {
       this.authenticated = false;
       token.value = null;
     },
-    async ValidateAuth() {
+    async ValidateAuth(): Promise<boolean> {
       const config = useRuntimeConfig();
       const token = useCookie('token');
       const { data, pending, error }: any = await useFetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/validate`, {
@@ -104,7 +104,25 @@ export const useAuthStore = defineStore('auth', {
       });
       if (error.value) {
         this.Logout()
+        return false
       }
+
+      return true
     },
+    async MainAccountExists(): Promise<boolean> {
+      const config = useRuntimeConfig();
+      const { data }: { data: boolean } = await $fetch<Responce | undefined>(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/exists`, {
+        method: 'GET'
+      })
+        .catch((error: any) => error.data);;
+
+      if (data === undefined) {
+        this.Logout()
+        return true
+      }
+
+      return data
+    },
+
   },
 });
