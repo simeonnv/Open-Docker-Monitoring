@@ -12,10 +12,10 @@ export default defineNuxtConfig({
     }
   },
 
-  sourcemap: {
-    server: true,
-    client: true
-  },
+  // sourcemap: {
+  //   server: true,
+  //   client: true
+  // },
 
   vue: {
     compilerOptions: {
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     }
   },
 
-  ssr: true,
+  // ssr: true,
   
   devServer: {
     port: process.env.FRONTEND_PORT !== undefined ? parseInt(process.env.FRONTEND_PORT) : 7004 // Set the port for development

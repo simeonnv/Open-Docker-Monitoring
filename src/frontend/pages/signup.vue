@@ -8,7 +8,7 @@ const { Login } = useAuthStore(); // use authenticateUser action from  auth stor
 const { authenticated, responce } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
 const user = ref({
-  username: '', 
+  username: '',
   password: '',
 });
 const router = useRouter();
@@ -27,64 +27,23 @@ const signup = async () => {
 </script>
 
 <template>
-  <div>
-    <h2>Login</h2>
-    <form>
-      <div>
-        <label for="email">Email:</label>
-        <input
-          id="email"
-          v-model="user.username"
-          type="email"
-          placeholder="Enter your email"
-          required
-        >
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input
-          id="password"
-          v-model="user.password"
-          type="password"
-          placeholder="Enter your password"
-          required
-        >
-      </div>
+  <div class="w-full h-full aling-middle justify-center flex items-center">
+    <UCard class="w-full max-w-md p-6">
+      <UForm class="flex flex-col gap-4">
+        <div>
+          <label for="username">Username: </label>
+          <UInput v-model="user.username" type="text" placeholder="Enter your username" required />
+        </div>
 
-      <p>{{ data, status, error }}</p>
+        <div>
+          <label for="password">Password: </label>
+          <UInput id="password" v-model="user.password" type="password" placeholder="Enter your password" required />
+        </div>
 
-      <button @click="signup" type="button">
-        log
-      </button>
-    </form>
-    <p v-if="error" style="color: red;">
-      {{ error }}
-    </p>
+        <UButton @click="signup" type="button" class="flex justify-center items-center">
+          Log In
+        </UButton>
+      </UForm>
+    </UCard>
   </div>
 </template>
-
-<style scoped>
-div {
-  max-width: 400px;
-  margin: 20px auto;
-}
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-input {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-}
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-button:disabled {
-  background-color: #cccccc;
-}
-</style>
