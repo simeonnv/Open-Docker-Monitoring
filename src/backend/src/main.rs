@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
             ])
             .allowed_header(actix_web::http::header::CONTENT_TYPE)
             .max_age(3600);
-                // fuck cors
+                
 
         App::new()
             .wrap(cors)
