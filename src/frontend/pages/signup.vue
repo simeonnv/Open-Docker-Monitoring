@@ -3,9 +3,9 @@
 import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
 import { useAuthStore } from '../stores/auth'; // import the auth store we just created
 
-const { Login, MainAccountExists } = useAuthStore(); // use authenticateUser action from  auth store
+const { Login, MainAccountExists,AuthorizeAppOwnership } = useAuthStore(); // use authenticateUser action from  auth store
 
-const { authenticated, responce } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
+const { authenticated, responce, key } = storeToRefs(useAuthStore()); // make authenticated state reactive with storeToRefs
 
 const user = ref({
   username: '',
@@ -25,6 +25,10 @@ const signup = async () => {
 };
 
 let nz = ref(1)
+let pluh = ref({
+  username: "root", 
+  password: "root"
+})
 
 </script>
 
@@ -33,11 +37,11 @@ let nz = ref(1)
     <Button @click="nz = (nz + 1) % 2">
       +++
     </Button>
-    <Button @click="async () => console.log(await MainAccountExists())">
+    <Button @click="async () => console.log(await AuthorizeAppOwnership(pluh))">
       test
     </Button>
     <Card class="mx-auto max-w-sm h-96 flex flex-col justify-center" v-auto-animate >
-      <AuthServerOwnershipCardContents v-if="nz === 1"/>
+      <AuthServerOwnershipCardContents v-if="key === ''"/>
       <AuthSignupCardContents v-else/>
     </Card>
   </div>
