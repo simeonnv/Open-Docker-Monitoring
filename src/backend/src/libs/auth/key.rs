@@ -3,11 +3,17 @@ use lazy_static::lazy_static;
 use crate::error::Error;
 
 lazy_static! {
+    #[derive(sqlx::FromRow, Debug)]
     pub static ref KEY: Arc<Mutex<String>> = Arc::new(Mutex::new(String::new()));
 }
 
 pub fn compare(provided_key: &str) -> Result<bool, Error> {
     let key = KEY.lock()?;
+    
+    if *key == "" {
+        return Ok(false)
+    }
+
     Ok(*key == provided_key)
 }
 

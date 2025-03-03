@@ -40,13 +40,14 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
                 
         let cors = Cors::default()
-            .allow_any_origin()
+            .allowed_origin("http://localhost:7004") // Explicitly allow Nuxt frontend origin
             .allowed_methods(vec!["GET", "POST", "PUT", "DELETE", "OPTIONS"])
             .allowed_headers(vec![
                 actix_web::http::header::AUTHORIZATION,
                 actix_web::http::header::ACCEPT,
+                actix_web::http::header::CONTENT_TYPE,
             ])
-            .allowed_header(actix_web::http::header::CONTENT_TYPE)
+            .supports_credentials() // If you're using cookies or auth tokens
             .max_age(3600);
                 
 

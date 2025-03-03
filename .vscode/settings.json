@@ -1,0 +1,43 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "src/frontend/.output": true,
+        "src/frontend/.nuxt": true,
+        "src/frontend/.data": true,
+        "src/frontend/--dotenv": true,
+        "src/frontend/node_modules": true,
+        "src/frontend/dist": true,
+        "src/frontend/.npmrc": true,
+        "src/frontend/README.md": true,
+        "src/frontend/package-lock.json": true,
+        "src/frontend/assets/css": true,
+        "src/frontend/assets": true,
+        "src/frontend/bun.lockb": true,
+        "src/frontend/components.json": true,
+        "src/frontend/tsconfig.json": true,
+        "src/frontend/app.config.ts": true
+    },
+    "hide-files.files": [
+        "src/frontend/.output",
+        "src/frontend/.nuxt",
+        "src/frontend/.data",
+        "src/frontend/--dotenv",
+        "src/frontend/node_modules",
+        "src/frontend/dist",
+        "src/frontend/.npmrc",
+        "src/frontend/README.md",
+        "src/frontend/package-lock.json",
+        "src/frontend/assets/css",
+        "src/frontend/assets",
+        "src/frontend/bun.lockb",
+        "src/frontend/components.json",
+        "src/frontend/tsconfig.json",
+        "src/frontend/app.config.ts",
+        "src/frontend/middleware/auth_pages.ts"
+    ]
+}

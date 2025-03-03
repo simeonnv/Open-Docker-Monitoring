@@ -76,12 +76,12 @@ export const useAuthStore = defineStore('auth', {
       if (data) {
         this.responce = {data, status}
         token.value = data;
-        this.key = ""
+        // this.key = ""
         this.authenticated = true;
       } else {
         this.responce = {data, status}
         token.value = null
-        this.key = ""
+        // this.key = ""
         this.authenticated = false;
       }
 
@@ -115,6 +115,7 @@ export const useAuthStore = defineStore('auth', {
         this.responce = {data, status}
       }
 
+      console.log("authenticated: ", this.authenticated)
       return {data, status}
     },
     Logout() {
@@ -125,22 +126,36 @@ export const useAuthStore = defineStore('auth', {
     async ValidateAuth(): Promise<boolean> {
       const config = useRuntimeConfig();
       const token = useCookie('token');
-      const { data, status }: any = await $fetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/validate`, {
-        method: 'get',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer: ${token}` 
-        }
-      })
-        .catch((error: any) => error.data);
-
-      if (data === undefined || status !== "success") {
-        this.Logout()
-        return false
+    
+      // Check if token exists before making the request
+      if (!token.value) {
+        this.Logout();
+        return false;
       }
-
-      this.authenticated = true
-      return true
+    
+      try {
+        const response = await $fetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/validate`, {
+          method: 'get',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token.value}` // Use .value explicitly
+          }
+        });
+    
+        const { data, status } = response as { data: any; status: string }; // Type the response
+    
+        if (!data || status !== 'success') {
+          this.Logout();
+          return false;
+        }
+    
+        this.authenticated = true;
+        return true;
+      } catch (error) {
+        console.error('ValidateAuth error:', error);
+        this.Logout();
+        return false;
+      }
     },
     async MainAccountExists(): Promise<boolean> {
       const config = useRuntimeConfig();

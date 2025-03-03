@@ -49,7 +49,10 @@ pub async fn post_auth_signup(req: web::Json<Req>) -> Result<HttpResponse, Error
         return Err(Error::Unauthorized("A main account already exists!".to_string()))
     }
 
-    if key::compare(&req.key)? {
+    dbg!(&*key::KEY);
+    dbg!(&req.key);
+
+    if !key::compare(&req.key)? {
         return Err(Error::Unauthorized("invalid signup key!".to_string()))
     }
 
