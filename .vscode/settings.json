@@ -15,12 +15,11 @@
         "src/frontend/.npmrc": true,
         "src/frontend/README.md": true,
         "src/frontend/package-lock.json": true,
-        "src/frontend/assets/css": true,
-        "src/frontend/assets": true,
         "src/frontend/bun.lockb": true,
         "src/frontend/components.json": true,
         "src/frontend/tsconfig.json": true,
-        "src/frontend/app.config.ts": true
+        "src/frontend/app.config.ts": true,
+        "src/frontend/middleware/auth_pages.ts": true
     },
     "hide-files.files": [
         "src/frontend/.output",
@@ -32,8 +31,6 @@
         "src/frontend/.npmrc",
         "src/frontend/README.md",
         "src/frontend/package-lock.json",
-        "src/frontend/assets/css",
-        "src/frontend/assets",
         "src/frontend/bun.lockb",
         "src/frontend/components.json",
         "src/frontend/tsconfig.json",

@@ -63,6 +63,15 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     '@formkit/auto-animate/nuxt'
   ],
+  app: {
+    pageTransition: {
+      name: 'layout', // Name of the transition
+      mode: 'out-in', // Wait for leaving transition to finish before entering
+      duration: 300 // Optional: transition duration in ms
+    }
+  },
+  
+  
   
   shadcn: {
     prefix: '',
