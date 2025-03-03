@@ -26,7 +26,7 @@ const { authenticated } = storeToRefs(useAuthStore()); // make authenticated sta
         </SheetTrigger>
         <SheetContent class="!w-full" side="left">
             <div class="bg-red-500 w-full h-full">
-                <BaseSidebarContent />
+                <SidebarContent />
             </div>
         </SheetContent>
     </Sheet>

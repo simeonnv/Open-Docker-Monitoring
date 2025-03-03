@@ -11,7 +11,7 @@
         <div class="grow"></div>
 
         <div class="flex flex-col justify-center align-middle items-center">
-            <BaseSidebarPhone class="md:hidden"/>
+            <SidebarPhone class="md:hidden"/>
         </div>
 
         <div class="flex flex-col justify-center align-middle items-center">
