@@ -5,8 +5,7 @@ export const containerClass = 'w-full h-full';
 </script>
 
 <template>
-<div>
-  dasdasdasdsadad
-</div>
 
+  
+  
 </template>

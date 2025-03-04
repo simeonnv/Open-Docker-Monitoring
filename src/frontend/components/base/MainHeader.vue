@@ -10,7 +10,7 @@
 
         <div class="grow"></div>
 
-        <div class="flex flex-col justify-center align-middle items-center">
+        <div v-if="!isAuthRoute" class="flex flex-col justify-center align-middle items-center">
             <SidebarPhone class="md:hidden"/>
         </div>
 
@@ -29,3 +29,13 @@
         <BaseChangeThemeButton size="26px"/>
     </div>
 </template>
+
+<script setup>
+
+const route = useRoute()
+
+const isAuthRoute = computed(() => {
+  return route.path === '/login' || route.path === '/signup'
+})
+
+</script>

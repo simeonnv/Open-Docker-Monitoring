@@ -1,5 +1,5 @@
 <template>
-    <NuxtLink :to="props.path" :class="isActive ? 'bg-red-500' : ''">
+    <NuxtLink :to="props.path" class="hover:transition-colors duration-500 rounded-xl p-2 hover:bg-muted/60" :class="isActive ? 'bg-muted/60' : ''">
         <slot>
 
         </slot>

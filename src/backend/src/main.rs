@@ -8,7 +8,7 @@ use tokio::sync::OnceCell;
 
 use actix_web::{middleware::Logger, web::PayloadConfig, App, HttpServer};
 use env_logger::Env;
-use sqlx::{Pool, Postgres};
+use sqlx::{Pool, Sqlite};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
@@ -18,7 +18,7 @@ pub mod error;
 pub mod libs;
 pub mod routes;
 
-static DB: OnceCell<Pool<Postgres>> = OnceCell::const_new();
+static DB: OnceCell<Pool<Sqlite>> = OnceCell::const_new();
 use bollard::Docker;
 
 static DOCKER: OnceCell<Docker> = OnceCell::const_new();

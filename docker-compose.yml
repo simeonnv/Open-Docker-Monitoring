@@ -8,8 +8,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock 
       - /usr/bin/docker:/usr/bin/docker
       - //./pipe/docker_engine://./pipe/docker_engine
-    depends_on:
-      - odm_database
     env_file:
       - .env
     # environment:
@@ -29,21 +27,6 @@ services:
       - odm_backend
     env_file:
       - .env.docker
-    networks:
-      - main
-
-  odm_database:
-    image: postgres:latest
-    ports:
-      - "5004:5432"
-    # environment:
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=root
-    #   - POSTGRES_DATABASE=my_database
-    volumes:
-      - odm:/var/lib/postgres
-    env_file:
-      - .env
     networks:
       - main
 

@@ -12,6 +12,12 @@ const props = defineProps({
   console.log(route.path)
   console.log(isActive.value)
 
+  import { storeToRefs } from 'pinia'; 
+  import { useAuthStore } from '../stores/auth'; 
+
+  const { Logout } = useAuthStore(); // use authenticateUser action from  auth store
+
+
 </script>
 
 
@@ -19,7 +25,21 @@ const props = defineProps({
 <template>
     <div class="h-full flex flex-col align-middle w-full items-center pt-4">
         
-        <SidebarElement icon_name="material-symbols:settings" text="settings" :folded/>
+      <SidebarElement icon_name="material-symbols:space-dashboard-rounded" text="dashboard" path="/" :folded/>
+
+      <SidebarElement icon_name="mingcute:dashboard-2-fill" text="statistics" path="/statistics" :folded/>
+
+      <SidebarElement icon_name="mingcute:user-security-fill" text="Authorization" path="/autorization" :folded/>
+
+      <SidebarElement icon_name="lets-icons:database-fill" text="logs" path="/logs" :folded/>
+
+
+
+      <div class="grow"></div>
+      
+      <SidebarElement icon_name="solar:logout-2-bold" text="Logout" @Click="Logout" path="/login" :folded/>
+
+      <SidebarElement icon_name="material-symbols:settings" text="settings" path="/settings" :folded/>
 
 
     </div>
