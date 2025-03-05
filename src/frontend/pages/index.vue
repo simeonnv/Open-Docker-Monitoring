@@ -6,7 +6,7 @@ export const containerClass = 'w-full h-full';
 
 <template>
 <div>
-  dasdasdasdsadad
+  INDEX
 </div>
 
 </template>

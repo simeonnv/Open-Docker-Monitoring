@@ -1,7 +1,6 @@
 use sqlx::migrate::MigrateDatabase;
 use sqlx::{Sqlite, Pool};
 use sqlx::sqlite::SqlitePoolOptions;
-use std::env;
 
 const DB_URL: &'static str = "sqlite://ODM.db";
 

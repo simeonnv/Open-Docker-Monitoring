@@ -29,7 +29,7 @@ const props = defineProps({
 
       <SidebarElement icon_name="mingcute:dashboard-2-fill" text="statistics" path="/statistics" :folded/>
 
-      <SidebarElement icon_name="mingcute:user-security-fill" text="Authorization" path="/autorization" :folded/>
+      <SidebarElement icon_name="mingcute:user-security-fill" text="Authorization" path="/authorization" :folded/>
 
       <SidebarElement icon_name="lets-icons:database-fill" text="logs" path="/logs" :folded/>
 

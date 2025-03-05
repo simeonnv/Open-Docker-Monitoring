@@ -53,7 +53,7 @@ pub async fn get_usage() -> Result<Vec<Stats>, error::Error> {
             // dbg!(&stats_raw);
 
             Ok(Stats {
-                read: stats_raw.read,
+                read: stats_raw.read.to_string(),
                 names: container.names,
                 id: container.id,
                 memory_stats: MemoryStats {
