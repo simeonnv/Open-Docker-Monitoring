@@ -1,4 +1,4 @@
-pub const QUERIES: [&str; 3] = [
+pub const QUERIES: [&str; 4] = [
     r#"
         CREATE TABLE IF NOT EXISTS Accounts (
             account_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,6 +28,17 @@ pub const QUERIES: [&str; 3] = [
             account_id INTEGER NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (account_id) REFERENCES Accounts(account_id)
+        );
+    "#,
+    r#"
+        CREATE TABLE IF NOT EXISTS DockerConnections (
+            docker_connetion_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name VARCHAR(256) NOT NULL,
+            host VARCHAR(256) NOT NULL,
+            protocol VARCHAR(32) NOT NULL,
+            cert_path VARCHAR(256),
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(protocol) WHERE protocol = 'local'
         );
     "#,
 ];
