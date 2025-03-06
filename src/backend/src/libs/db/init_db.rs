@@ -19,7 +19,7 @@ pub async fn init_db() -> Result<Pool<Sqlite>, sqlx::Error> {
     
     
     let pool = SqlitePoolOptions::new()
-        .max_connections(5)
+        .max_connections(25)
         .connect(DB_URL)
         .await?;
     println!("Connected to SQLite database at {}", DB_URL);

@@ -1,10 +1,11 @@
 
 use actix_cors::Cors;
 use env::ENV;
+use lazy_static::lazy_static;
 // use libs::auth::create_account::create_account;
 use libs::{auth::create_account::create_account, db};
 use routes::routes;
-use tokio::sync::OnceCell;
+use tokio::{runtime::Runtime, sync::OnceCell};
 
 use actix_web::{middleware::Logger, web::PayloadConfig, App, HttpServer};
 use env_logger::Env;
@@ -21,7 +22,9 @@ pub mod routes;
 static DB: OnceCell<Pool<Sqlite>> = OnceCell::const_new();
 use bollard::Docker;
 
-static DOCKER: OnceCell<Docker> = OnceCell::const_new();
+lazy_static! {
+    pub static ref RT: Runtime = Runtime::new().unwrap();
+}
     
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
