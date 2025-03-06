@@ -37,8 +37,7 @@ pub const QUERIES: [&str; 4] = [
             host VARCHAR(256) NOT NULL,
             protocol VARCHAR(32) NOT NULL,
             cert_path VARCHAR(256),
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(protocol) WHERE protocol = 'local'
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
     "#,
 ];
