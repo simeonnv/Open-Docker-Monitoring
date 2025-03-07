@@ -1,6 +1,6 @@
 use crate::{error::Error, libs::{db::get_pool::get_pool, util::validate_protocol::validate_protocol}};
 
-use super::check_local_connection_exist::check_local_connection_exist;
+use super::check_local_connection_exist_db::check_local_connection_exist_db;
 
 
 
@@ -11,7 +11,7 @@ pub async fn store_docker_connection(name: String, host: String, protocol: Strin
     validate_protocol(&protocol)?;
 
     if protocol == "local" {
-        check_local_connection_exist().await?;
+        check_local_connection_exist_db().await?;
     }
 
     sqlx::query(r#"

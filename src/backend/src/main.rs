@@ -3,7 +3,7 @@ use actix_cors::Cors;
 use env::ENV;
 use lazy_static::lazy_static;
 // use libs::auth::create_account::create_account;
-use libs::{auth::create_account::create_account, db};
+use libs::{auth::create_account::create_account, db, docker::init_docker_container_threads::init_docker_container_threads};
 use routes::routes;
 use tokio::{runtime::Runtime, sync::OnceCell};
 
@@ -22,9 +22,6 @@ pub mod routes;
 static DB: OnceCell<Pool<Sqlite>> = OnceCell::const_new();
 use bollard::Docker;
 
-lazy_static! {
-    pub static ref RT: Runtime = Runtime::new().unwrap();
-}
     
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -37,7 +34,7 @@ async fn main() -> std::io::Result<()> {
 
     let _ = create_account(&"admin".to_string(), &"admin".to_string(), "admin").await;
     
-    
+    init_docker_container_threads().await.expect("Failed to init docker sidethreads");
 
     HttpServer::new(|| {
                 

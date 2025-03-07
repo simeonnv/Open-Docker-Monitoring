@@ -2,7 +2,7 @@ use crate::{error::Error, libs::db::get_pool::get_pool};
 
 
 
-pub async fn check_local_connection_exist() -> Result<(), Error> {
+pub async fn check_local_connection_exist_db() -> Result<(), Error> {
 
     let pool = get_pool();
 
