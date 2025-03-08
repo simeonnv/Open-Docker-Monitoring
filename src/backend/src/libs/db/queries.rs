@@ -39,5 +39,8 @@ pub const QUERIES: [&str; 4] = [
             cert_path VARCHAR(256),
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
-    "#,
+    "#
 ];
+
+
+// INSERT INTO container_logs (docker_name, container_id, timestamp, error_message) VALUES (?, ?, ?, ?)

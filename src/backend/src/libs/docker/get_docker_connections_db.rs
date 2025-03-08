@@ -1,12 +1,5 @@
 use crate::{error::Error, libs::db::get_pool::get_pool};
-
-#[derive(sqlx::FromRow, Debug)]
-pub struct DockerConnection {
-    pub name: String,
-    pub host: String,
-    pub protocol: String,
-    pub cert_path: Option<String>
-}
+use super::structs::docker_connection::DockerConnection;
 
 pub async fn get_docker_connections_db() -> Result<Vec<DockerConnection>, Error> {
 

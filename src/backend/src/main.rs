@@ -3,7 +3,7 @@ use actix_cors::Cors;
 use env::ENV;
 use lazy_static::lazy_static;
 // use libs::auth::create_account::create_account;
-use libs::{auth::create_account::create_account, db, docker::init_docker_container_threads::init_docker_container_threads};
+use libs::{auth::create_account::create_account, db, docker::{add_new_docker::add_new_docker, init_dockers::init_dockers, REALTIME_CONNECTED_DOCKERS}};
 use routes::routes;
 use tokio::{runtime::Runtime, sync::OnceCell};
 
@@ -31,11 +31,17 @@ async fn main() -> std::io::Result<()> {
     db::init_pool::init_pool().await.expect("Failed to initialize database");
     db::init_tables::init_tables().await.expect("Failed to initialize tables");
 
+    init_dockers().await.expect("couldnt init dockers!");
+    
+        let connected_dockers = REALTIME_CONNECTED_DOCKERS.read().await;
+        for docker in connected_dockers.iter() {
+            dbg!(docker);
+
+        }
+    
 
     let _ = create_account(&"admin".to_string(), &"admin".to_string(), "admin").await;
     
-    init_docker_container_threads().await.expect("Failed to init docker sidethreads");
-
     HttpServer::new(|| {
                 
         let cors = Cors::default()
