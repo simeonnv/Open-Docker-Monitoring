@@ -35,7 +35,9 @@ impl Modify for BearerAuthAddon {
         routes::auth::get_auth_exists::get_auth_exists,
 
         routes::files::get_files_id::get_files_id,
-        routes::files::post_files::post_files
+        routes::files::post_files::post_files,
+
+        routes::docker::get_docker::get_docker
         
     ),
     tags(

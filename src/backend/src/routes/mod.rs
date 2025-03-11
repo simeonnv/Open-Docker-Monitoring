@@ -6,6 +6,7 @@ use crate::api_docs;
 
 pub mod files;
 pub mod auth;
+pub mod docker;
 
 
 pub fn routes() -> Scope {
@@ -13,6 +14,7 @@ pub fn routes() -> Scope {
 
         .service(files::files())
         .service(auth::auth())
+        .service(docker::docker())
         .service(SwaggerUi::new("/{_:.*}").url("/api-docs/openapi.json", api_docs::ApiDoc::openapi()))
         
 }
