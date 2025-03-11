@@ -7,7 +7,7 @@ pub async fn get_docker_connections_db() -> Result<Vec<DockerConnection>, Error>
 
     let docker_connections: Vec<DockerConnection> = sqlx::query_as(r#"
     
-        SELECT name, host, protocol, cert_path FROM DockerConnections;
+        SELECT name, host, protocol FROM DockerConnections;
 
     "#)
         .fetch_all(pool)

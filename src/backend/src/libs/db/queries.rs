@@ -36,7 +36,6 @@ pub const QUERIES: [&str; 4] = [
             name VARCHAR(256) NOT NULL,
             host VARCHAR(256) NOT NULL,
             protocol VARCHAR(32) NOT NULL,
-            cert_path VARCHAR(256),
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         );
     "#
