@@ -6,14 +6,16 @@ use crate::error::Error;
 use crate::libs::auth::auth_middleware::AccountData;
 use crate::libs::files::upload_file::upload_file;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, ToSchema)]
+#[schema(as = Post::Files::Res)]
 struct Res {
     status: &'static str,
     data: Option<i32>
 }
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
+#[schema(as = Post::Files::Req)]
 pub struct Req {
     pub file_blob: Vec<u8>,
 }
@@ -22,17 +24,17 @@ pub struct Req {
 #[utoipa::path(
     post,
     path = "/files",
-    request_body = PostFilesIdReqDocs,
+    request_body = Req,
     responses(
-        (status = 200, description = "Signup successful", body = PostFilesIdResDocs, example = json!({
+        (status = 200, description = "Signup successful", body = Res, example = json!({
             "status": "success",
             "data": 16
         })),
-        (status = 401, description = "Unauthorized", body = PostFilesIdResDocs, example = json!({
+        (status = 401, description = "Unauthorized", body = Res, example = json!({
             "status": "Invalid premisions",
             "data": ""
         })),
-        (status = 400, description = "Bad Request", body = PostFilesIdResDocs, example = json!({
+        (status = 400, description = "Bad Request", body = Res, example = json!({
             "status": "Bad request data",
             "data": ""
         }))
@@ -59,17 +61,4 @@ async fn post_files(token_data: HttpRequest, req: web::Json<Req>) -> Result<Http
             data: None,
         }))
     }
-}
-
-
-#[derive(Serialize, Deserialize, ToSchema)]
-struct PostFilesIdResDocs {
-    status: &'static str,
-    data: Option<i64>
-}
-
-
-#[derive(Serialize, Deserialize, ToSchema)]
-pub struct PostFilesIdReqDocs {
-    pub file_blob: Vec<u8>,
 }

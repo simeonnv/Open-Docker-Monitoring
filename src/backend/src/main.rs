@@ -1,17 +1,14 @@
 
 use actix_cors::Cors;
 use env::ENV;
-use lazy_static::lazy_static;
-// use libs::auth::create_account::create_account;
-use libs::{auth::create_account::create_account, db, docker::docker_realtime_connections::{DockerRealtimeConnections, REALTIME_CONNECTED_DOCKERS}};
+
+use libs::{auth::create_account::create_account, db, docker::docker_realtime_connections::REALTIME_CONNECTED_DOCKERS};
 use routes::routes;
 use tokio::{runtime::Runtime, sync::OnceCell};
 
 use actix_web::{middleware::Logger, web::PayloadConfig, App, HttpServer};
 use env_logger::Env;
 use sqlx::{Pool, Sqlite};
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 
 pub mod api_docs;
 pub mod env;
@@ -20,7 +17,6 @@ pub mod libs;
 pub mod routes;
 
 static DB: OnceCell<Pool<Sqlite>> = OnceCell::const_new();
-use bollard::Docker;
 
     
 #[actix_web::main]
@@ -33,7 +29,6 @@ async fn main() -> std::io::Result<()> {
 
     REALTIME_CONNECTED_DOCKERS.init().await.expect("failed to init dockers!!!!");
     
-
     let _ = create_account(&"admin".to_string(), &"admin".to_string(), "admin").await;
     
     HttpServer::new(|| {

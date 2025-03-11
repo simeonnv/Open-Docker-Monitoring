@@ -2,16 +2,18 @@
 use actix_web::{post, web, HttpResponse};
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
-use crate::{env::{Env, ENV}, error::Error, libs::{auth::{create_account::create_account, create_token::create_token, does_account_exist::does_account_exist, key}, crypto::rand_string::rand_string, util::insure_len::insure_len}};
+use crate::{env::ENV, error::Error, libs::{auth::{does_account_exist::does_account_exist, key}, crypto::rand_string::rand_string}};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
+#[schema(as = Post::Auth::Signup::Key::Req)]
 pub struct Req {
     pub username: String,
     pub password: String,
 }
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
+#[schema(as = Post::Auth::Signup::Key::Res)]
 struct Res {
     status: &'static str,
     data: String
@@ -20,18 +22,18 @@ struct Res {
 #[utoipa::path(
     post,
     path = "/auth/signup_key",
-    request_body = PostAuthSignupDocReq,
+    request_body = Req,
     description = "For one to signup. first you need to get a signup key. To get a signup key you need to login first using your ENV variable credentials (autism)",
     responses(
-        (status = 200, description = "Signup successful", body = PostAuthSignupDocsRes, example = json!({
+        (status = 200, description = "Signup successful", body = Res, example = json!({
             "status": "success",
             "token": "abc123xyz456"
         })),
-        (status = 401, description = "Unauthorized", body = PostAuthSignupDocsRes, example = json!({
+        (status = 401, description = "Unauthorized", body = Res, example = json!({
             "status": "incorrect credential",
             "token": ""
         })),
-        (status = 409, description = "Conflict", body = PostAuthSignupDocsRes, example = json!({
+        (status = 409, description = "Conflict", body = Res, example = json!({
             "status": "account already exists",
             "token": ""
         }))
@@ -60,19 +62,4 @@ pub async fn post_auth_signup_key(req: web::Json<Req>) -> Result<HttpResponse, E
         data: key,
     }));
    
-}
-
-
-#[derive(Serialize, Deserialize, ToSchema)]
-#[schema(title = "Signup Request")]
-pub struct PostAuthSignupDocReq {
-    pub username: String,
-    pub password: String,
-}
-
-#[derive(Serialize, Deserialize, Debug, ToSchema)]
-#[schema(title = "Signup Response")]
-struct PostAuthSignupDocsRes {
-    status: String,
-    token: String
 }

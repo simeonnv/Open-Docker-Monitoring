@@ -6,7 +6,8 @@ use crate::error::Error;
 use crate::libs::auth::does_account_exist::does_account_exist;
 
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, ToSchema)]
+#[schema(as = Get::Auth::Exists::Req)]
 struct Res {
     status: &'static str,
     data: bool
@@ -17,7 +18,7 @@ struct Res {
     get,
     path = "/auth/exists",
     responses(
-        (status = 200, description = "auth successful", body = GetAuthExistsResDocs, example = json!({
+        (status = 200, description = "auth successful", body = Res, example = json!({
             "status": "success",
             "data": "true or false"
         }))
@@ -32,10 +33,4 @@ pub async fn get_auth_exists() -> Result<HttpResponse, Error> {
         status: "success",
         data: exists,
     }));
-}
-
-#[derive(Serialize, ToSchema)]
-struct GetAuthExistsResDocs {
-    status: &'static str,
-    data: bool
 }

@@ -6,12 +6,14 @@ use crate::error::Error;
 use crate::libs::auth::auth_middleware::AccountData;
 
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, ToSchema)]
+#[schema(as = Get::Auth::Validate::Req)]
 struct Res {
     status: &'static str,
     data: Option<User>
 }
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, ToSchema)]
+#[schema(as = Post::Auth::Validate::User)]
 struct User {
     username: String,
     id: i32
@@ -22,14 +24,14 @@ struct User {
     get,
     path = "/auth/validate",
     responses(
-        (status = 200, description = "auth successful", body = GetAuthValidateResDocs, example = json!({
+        (status = 200, description = "auth successful", body = Res, example = json!({
             "status": "success",
             "data": {
                 "username": "NAME",
                 "id": 15
             }
         })),
-        (status = 401, description = "Unauthorized", body = GetAuthValidateResDocs, example = json!({
+        (status = 401, description = "Unauthorized", body = Res, example = json!({
             "status": "Invalid premisions",
             "data": ""
         }))
@@ -58,16 +60,4 @@ pub async fn get_auth_validate(
                 data: None,
             }))
     }
-}
-
-#[derive(Serialize, ToSchema)]
-struct GetAuthValidateResDocs {
-    status: &'static str,
-    data: Option<GetAuthValidateUserDocs>
-}
-
-#[derive(Serialize, ToSchema)]
-struct GetAuthValidateUserDocs {
-    username: String,
-    id: i32
 }

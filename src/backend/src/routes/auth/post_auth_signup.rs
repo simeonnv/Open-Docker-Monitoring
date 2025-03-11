@@ -4,7 +4,8 @@ use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 use crate::{error::Error, libs::{auth::{create_account::create_account, create_token::create_token, does_account_exist::does_account_exist, key}, util::insure_len::insure_len}};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
+#[schema(as = Post::Auth::Signup::Req)]
 pub struct Req {
     pub username: String,
     pub password: String,
@@ -12,7 +13,8 @@ pub struct Req {
 }
 
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, ToSchema)]
+#[schema(as = Post::Auth::Signup::Res)]
 struct Res {
     status: &'static str,
     data: String
@@ -21,17 +23,17 @@ struct Res {
 #[utoipa::path(
     post,
     path = "/auth/signup",
-    request_body = PostAuthSignupKeyDocReq,
+    request_body = Req,
     responses(
-        (status = 200, description = "Signup successful", body = PostAuthSignupKeyDocsRes, example = json!({
+        (status = 200, description = "Signup successful", body = Res, example = json!({
             "status": "success",
             "token": "abc123xyz456"
         })),
-        (status = 401, description = "Unauthorized", body = PostAuthSignupKeyDocsRes, example = json!({
+        (status = 401, description = "Unauthorized", body = Res, example = json!({
             "status": "incorrect credential",
             "token": ""
         })),
-        (status = 409, description = "Conflict", body = PostAuthSignupKeyDocsRes, example = json!({
+        (status = 409, description = "Conflict", body = Res, example = json!({
             "status": "account already exists",
             "token": ""
         }))
@@ -67,18 +69,3 @@ pub async fn post_auth_signup(req: web::Json<Req>) -> Result<HttpResponse, Error
    
 }
 
-
-#[derive(Serialize, Deserialize, ToSchema)]
-#[schema(title = "Signup Key Request")]
-pub struct PostAuthSignupKeyDocReq {
-    pub username: String,
-    pub password: String,
-    pub key: String
-}
-
-#[derive(Serialize, Deserialize, Debug, ToSchema)]
-#[schema(title = "Signup Key Response")]
-struct PostAuthSignupKeyDocsRes {
-    status: String,
-    token: String
-}

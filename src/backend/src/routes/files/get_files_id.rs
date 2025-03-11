@@ -8,7 +8,8 @@ use crate::libs::db::structs::files::Files;
 use crate::libs::files::get_file::get_file;
 
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, ToSchema)]
+#[schema(as = Get::Files::Res)]
 struct Res {
     status: &'static str,
     data: Option<Files>
@@ -22,7 +23,7 @@ struct Res {
         ("file_id" = String, Path, description = "Unique image ID")
     ),
     responses(
-        (status = 200, description = "Signup successful", body = GetFilesIdResDocs, example = json!({
+        (status = 200, description = "Signup successful", body = Res, example = json!({
             "status": "success",
             "data":{
                 "file_id": 12,
@@ -33,11 +34,11 @@ struct Res {
                 "created_at": "TIME NOW",
             }
         })),
-        (status = 401, description = "Unauthorized", body = GetFilesIdResDocs, example = json!({
+        (status = 401, description = "Unauthorized", body = Res, example = json!({
             "status": "Invalid premisions",
             "data": ""
         })),
-        (status = 400, description = "Bad Request", body = GetFilesIdResDocs, example = json!({
+        (status = 400, description = "Bad Request", body = Res, example = json!({
             "status": "Bad request data",
             "data": ""
         }))
@@ -71,19 +72,3 @@ async fn get_files_id(
     }
 }
 
-
-#[derive(Serialize, ToSchema)]
-struct GetFilesIdResDocs {
-    status: &'static str,
-    data: Option<FilesResDocs>,
-}
-
-#[derive(sqlx::FromRow, Debug, Serialize, ToSchema)]
-pub struct FilesResDocs {
-    pub file_id: i64,
-    pub file_blob: Vec<u8>,
-    pub size: i64,
-    pub file_type: String,
-    pub account_id: i64,
-    pub created_at: String,
-}
