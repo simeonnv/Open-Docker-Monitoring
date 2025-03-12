@@ -1,69 +1,67 @@
 import { defineStore } from 'pinia';
 
 export interface DockerInfo {
-  id?: string | null;
-  server_version?: string | null;
-  containers?: number | null;
-  containers_running?: number | null;
-  containers_paused?: number | null;
-  containers_stopped?: number | null;
-  images?: number | null;
-  kernel_version?: string | null;
-  os_type?: string | null;
-  architecture?: string | null;
-  ncpu?: number | null;
-  mem_total?: number | null;
+    id?: string | null;
+    server_version?: string | null;
+    containers?: number | null;
+    containers_running?: number | null;
+    containers_paused?: number | null;
+    containers_stopped?: number | null;
+    images?: number | null;
+    kernel_version?: string | null;
+    os_type?: string | null;
+    architecture?: string | null;
+    ncpu?: number | null;
+    mem_total?: number | null;
 }
 
 export interface GetDockerRes {
-  status: string;
-  data: Record<string, DockerInfo>; 
+    status: string;
+    data: Record<string, DockerInfo>;
 }
 
 export const useDockersStore = defineStore('dockers', {
-  state: () => ({
-    dockers: {} as Record<string, DockerInfo>,
-    selectedDocker: null as DockerInfo | null, 
-    loading: false,       
-    error: null,
-  }),
+    state: () => ({
+        dockers: {} as Record<string, DockerInfo>,
+        selectedDocker: null as DockerInfo | null,
+        error: null,
+    }),
 
-  actions: {
-    async fetchDockers() {
-      this.loading = true;
+    actions: {
+        async fetchDockers() {
 
-      const config = useRuntimeConfig();
-      const token = useCookie('token');
-      
-      const response = await $fetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/docker`, {
-        method: 'get',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token.value}` // Use .value explicitly
+            const config = useRuntimeConfig();
+            const token = useCookie('token');
+
+            const response = await $fetch(`${config.public.backendPublicAddress}:${config.public.backendPort}/docker`, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token.value}` // Use .value explicitly
+                },
+                retry: 3,
+                retryDelay: 200,
+            })
+                .catch((error: any) => error.data);
+
+            const { data, status } = response as GetDockerRes;
+
+            this.dockers = data
+
         },
-        retry: 3,
-        retryDelay: 200,
-      })
-        .catch((error: any) => error.data);
 
-      const { data, status } = response as GetDockerRes;
+        selectDocker(name: string) {
+            this.selectedDocker = this.dockers[name] || null;
+        },
 
-      this.dockers = data
-
+        clearSelectedDocker() {
+            this.selectedDocker = null;
+        },
     },
 
-    selectDocker(name: string) {
-      this.selectedDocker = this.dockers[name] || null;
+    getters: {
+        getDockers: (state) => state.dockers,
+        getSelectedDocker: (state) => state.selectedDocker,
+        hasOnlyOneDocker: (state): boolean => Object.keys(state.dockers).length === 1,
     },
-
-    clearSelectedDocker() {
-      this.selectedDocker = null;
-    },
-  },
-
-  getters: {
-    getDockers: (state) => state.dockers,
-    getSelectedDocker: (state) => state.selectedDocker,
-    isLoading: (state) => state.loading,
-  },
 });

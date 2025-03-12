@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
+import { useDockersStore } from '../stores/docker';
+const { fetchDockers } = useDockersStore();
+const { dockers, hasOnlyOneDocker } = storeToRefs(useDockersStore());
 
+await fetchDockers();
 
 </script>
 
@@ -8,7 +12,9 @@
 
   <div class="w-full h-full">
     
-    INDEX
+    {{ dockers }}
+
+    {{ hasOnlyOneDocker }}
 
   </div>
 
