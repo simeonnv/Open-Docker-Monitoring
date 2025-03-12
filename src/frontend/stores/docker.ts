@@ -60,8 +60,9 @@ export const useDockersStore = defineStore('dockers', {
     },
 
     getters: {
-        getDockers: (state) => state.dockers,
-        getSelectedDocker: (state) => state.selectedDocker,
+        getDockers: (state): Record<string, DockerInfo> => state.dockers,
+        getSelectedDocker: (state): DockerInfo | null => state.selectedDocker,
         hasOnlyOneDocker: (state): boolean => Object.keys(state.dockers).length === 1,
+        isADockerSelected: (state): boolean => state.selectedDocker !== null,
     },
 });

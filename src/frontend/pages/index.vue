@@ -1,20 +1,16 @@
 <script setup lang="ts">
 
-import { useDockersStore } from '../stores/docker';
-const { fetchDockers } = useDockersStore();
-const { dockers, hasOnlyOneDocker } = storeToRefs(useDockersStore());
+  const { fetchDockers } = useDockersStore();
 
-await fetchDockers();
+  await fetchDockers();
 
 </script>
 
 <template>
-
+  
   <div class="w-full h-full">
     
-    {{ dockers }}
-
-    {{ hasOnlyOneDocker }}
+    <ChooseDocker/>
 
   </div>
 
