@@ -10,7 +10,7 @@ const folded = ref(true)
     
     <div class="w-full flex flex-row justify-center">
       <Button class="flex transition-all w-full duration-500 ease-in-out" variant="ghost" @click="folded = !folded">
-        <Icon :class="folded ? 'rotate-0' : 'rotate-180'" 
+        <Icon :class="folded ? 'rotate-180' : 'rotate-0'" 
               name="material-symbols:arrow-back-2-rounded" 
               class="w-6 h-6 text-primary transition-transform duration-500" />
       </Button>

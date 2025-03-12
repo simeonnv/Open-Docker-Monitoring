@@ -1,12 +1,15 @@
-<script lang="ts">
-export const description = 'A sidebar that collapses to icons.';
-export const iframeHeight = '800px';
-export const containerClass = 'w-full h-full';
+<script setup lang="ts">
+
+
+
 </script>
 
 <template>
-<div>
-  INDEX
-</div>
+
+  <div class="w-full h-full">
+    
+    INDEX
+
+  </div>
 
 </template>

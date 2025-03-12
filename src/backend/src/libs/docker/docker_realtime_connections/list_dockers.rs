@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use bollard::{container::ListContainersOptions, secret::ContainerSummary, system::Version};
 use crate::{error::Error, libs::docker::structs::docker_info::DockerInfo};
 use super::DockerRealtimeConnections;
 

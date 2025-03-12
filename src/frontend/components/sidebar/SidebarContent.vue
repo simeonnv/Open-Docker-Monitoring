@@ -12,12 +12,6 @@ const props = defineProps({
   console.log(route.path)
   console.log(isActive.value)
 
-  import { storeToRefs } from 'pinia'; 
-  import { useAuthStore } from '../stores/auth'; 
-
-  const { Logout } = useAuthStore(); // use authenticateUser action from  auth store
-
-
 </script>
 
 
@@ -36,11 +30,8 @@ const props = defineProps({
 
 
       <div class="grow"></div>
-      
-      <SidebarElement icon_name="solar:logout-2-bold" text="Logout" @Click="Logout" path="/login" :folded/>
 
       <SidebarElement icon_name="material-symbols:settings" text="settings" path="/settings" :folded/>
-
 
     </div>
 </template>

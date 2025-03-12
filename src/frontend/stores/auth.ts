@@ -139,10 +139,14 @@ export const useAuthStore = defineStore('auth', {
           headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token.value}` // Use .value explicitly
-          }
-        });
+          },
+          retry: 3,
+          retryDelay: 200,
+        })
+          .catch((error: any) => error.data);
+
     
-        const { data, status } = response as { data: any; status: string }; // Type the response
+        const { data, status } = response as { data: any; status: string }; 
     
         if (!data || status !== 'success') {
           this.Logout();
@@ -160,7 +164,9 @@ export const useAuthStore = defineStore('auth', {
     async MainAccountExists(): Promise<boolean> {
       const config = useRuntimeConfig();
       const { data }: { data: boolean } = await $fetch<Responce | undefined>(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/exists`, {
-        method: 'GET'
+        method: 'GET',
+        retry: 3,
+        retryDelay: 50,
       })
         .catch((error: any) => error.data);;
 

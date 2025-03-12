@@ -4,9 +4,8 @@ import { useAuthStore } from '../stores/auth';
 import { ref, onMounted } from 'vue';
 
 const { authenticated } = storeToRefs(useAuthStore());
-const isHydrated = ref(false); // Track hydration state
+const isHydrated = ref(false); 
 
-// Set isHydrated to true after the component mounts
 onMounted(() => {
   isHydrated.value = true;
 });

@@ -13,7 +13,7 @@ use crate::libs::docker::structs::docker_info::DockerInfo;
 #[schema(as = Get::Docker::Res)]
 struct Res {
     status: &'static str,
-    data: Option<HashMap<String, DockerInfo>>
+    data: HashMap<String, DockerInfo>
 }
 
 
@@ -40,13 +40,13 @@ async fn get_docker(
 
         return Ok(HttpResponse::Ok().json(Res {
             status: "success",
-            data: Some(docker_data),
+            data: docker_data,
         }))
 
     } else {
         return Ok(HttpResponse::Unauthorized().json(Res {
             status: "Unauthorized access",
-            data: None,
+            data: HashMap::new(),
         }))
     }
 }
