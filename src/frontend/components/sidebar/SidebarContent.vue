@@ -1,12 +1,12 @@
 
 
 <script setup>
-const props = defineProps({
-  folded: {
-    type: Boolean,
-    default: false
-  }
-})
+  const props = defineProps({
+    folded: {
+      type: Boolean,
+      default: false
+    }
+  })
   const route = useRoute()
   const isActive = computed(() => route.path === props.path)
   console.log(route.path)

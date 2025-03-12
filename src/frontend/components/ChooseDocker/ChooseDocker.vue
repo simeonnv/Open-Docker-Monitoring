@@ -1,18 +1,12 @@
 <script setup>
-
-    import { useDockersStore } from '../stores/docker';
-    const { dockers, hasOnlyOneDocker, isADockerSelected  } = storeToRefs(useDockersStore());
-
+import { useDockersStore } from '../stores/docker';
+const { dockers } = storeToRefs(useDockersStore());
 </script>
 
 <template>
-  
-  <div class="w-full h-full grid grid-cols-2">
-    
-    <div v-for="docker in dockers">
-      <ChooseDockerCard/>
-    </div>
-
+  <div class="w-full h-full flex flex-wrap justify-center gap-4 items-center">
+    <template v-for="(docker, name) in dockers" :key="name">
+      <ChooseDockerCard :docker="docker" :name="name" />
+    </template>
   </div>
-
 </template>
