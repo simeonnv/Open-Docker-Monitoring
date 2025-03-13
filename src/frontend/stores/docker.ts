@@ -15,21 +15,26 @@ export interface DockerInfo {
     mem_total?: number | null;
 }
 
+export interface DockerConnection {
+    name: string;
+    host: string;
+    protocol: string;
+}
+
 export interface GetDockerRes {
     status: string;
-    data: Record<string, DockerInfo>;
+    data: Record<string, [DockerConnection, DockerInfo]>;
 }
 
 export const useDockersStore = defineStore('dockers', {
     state: () => ({
-        dockers: {} as Record<string, DockerInfo>,
-        selectedDocker: null as DockerInfo | null,
+        dockers: {} as Record<string, [DockerConnection, DockerInfo]>, // Stores the pair
+        selectedDocker: null as [DockerConnection, DockerInfo] | null, // Selected pair
         error: null,
     }),
 
     actions: {
         async fetchDockers() {
-
             const config = useRuntimeConfig();
             const token = useCookie('token');
 
@@ -37,17 +42,15 @@ export const useDockersStore = defineStore('dockers', {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token.value}` // Use .value explicitly
+                    'Authorization': `Bearer ${token.value}`
                 },
                 retry: 3,
                 retryDelay: 200,
-            })
-                .catch((error: any) => error.data);
+            }).catch((error: any) => error.data);
 
             const { data, status } = response as GetDockerRes;
 
-            this.dockers = data
-
+            this.dockers = data;
         },
 
         selectDocker(name: string) {
@@ -60,8 +63,8 @@ export const useDockersStore = defineStore('dockers', {
     },
 
     getters: {
-        getDockers: (state): Record<string, DockerInfo> => state.dockers,
-        getSelectedDocker: (state): DockerInfo | null => state.selectedDocker,
+        getDockers: (state): Record<string, [DockerConnection, DockerInfo]> => state.dockers,
+        getSelectedDocker: (state): [DockerConnection, DockerInfo] | null => state.selectedDocker,
         hasOnlyOneDocker: (state): boolean => Object.keys(state.dockers).length === 1,
         isADockerSelected: (state): boolean => state.selectedDocker !== null,
     },

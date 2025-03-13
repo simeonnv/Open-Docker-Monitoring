@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+
+
+
   const { fetchDockers } = useDockersStore();
 
   await fetchDockers();
@@ -8,9 +11,13 @@
 
 <template>
   
-  <div class="w-full h-full">
+  <div class="flex flex-row w-full h-full">
     
-    <ChooseDocker/>
+    <DashboardDashboardSidebar/>
+
+    <div class="w-full h-full flex">
+      <DashboardDashboardBody/>
+    </div>
 
   </div>
 

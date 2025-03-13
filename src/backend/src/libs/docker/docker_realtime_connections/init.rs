@@ -19,7 +19,7 @@ impl DockerRealtimeConnections {
                 Ok(d) => d
             };
             
-            self.insert(docker_connection.name, docker).await;
+            self.insert(docker_connection.name.clone(),  docker_connection, docker).await;
         } 
         // // ! this could lead to error in the close future
         // // ! if a docker stored from the database failes to load on runtime, it will lead to a whole exeption crash

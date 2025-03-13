@@ -15,7 +15,7 @@ impl DockerRealtimeConnections {
         let mut tasks = Vec::new();
 
         // Spawn a task for each Docker instance to fetch containers concurrently for silly max speed
-        for docker in guard.values() {
+        for (_, docker) in guard.values() {
             let docker = docker.clone();
             let options = options.clone();
 

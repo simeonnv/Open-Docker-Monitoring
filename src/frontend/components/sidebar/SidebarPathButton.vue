@@ -15,7 +15,6 @@ const props = defineProps({
 })
 const route = useRoute()
 const isActive = computed(() => route.path === props.path)
-console.log(route.path)
-console.log(isActive.value)
+
 
 </script>

@@ -5,6 +5,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   const main_account_exists = await authStore.MainAccountExists();
   const auth_validated = await authStore.ValidateAuth()
 
+  // ! must handle if requests dont go through
+
   if ((to.path === '/login' || to.path === '/signup') && auth_validated)
     return navigateTo('/');
     

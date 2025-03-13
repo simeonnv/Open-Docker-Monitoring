@@ -6,7 +6,7 @@ impl DockerRealtimeConnections {
     pub async fn list_containers_for_docker(&self, name: &String) -> Result<Vec<ContainerSummary>, Error> {
         let guard = self.inner.read().await;
         
-        let docker = match guard.get(name) {
+        let (_, docker) = match guard.get(name) {
             Some(e) => e,
             None => return Err(Error::BadRequest("Docker does not exist with such name!".to_string())),
         };

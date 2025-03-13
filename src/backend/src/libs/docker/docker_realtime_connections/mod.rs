@@ -3,9 +3,10 @@ use std::{collections::HashMap, sync::Arc};
 use bollard::Docker;
 use lazy_static::lazy_static;
 use tokio::sync::RwLock;
+use super::structs::docker_connection::DockerConnection;
 
 pub struct DockerRealtimeConnections {
-    inner: Arc<RwLock<HashMap<String, Docker>>>, //this is private and not indended to be read (stiga s toq OOP)
+    inner: Arc<RwLock<HashMap<String, (DockerConnection, Docker)>>>, //this is private and not indended to be read (stiga s toq OOP)
 }
 
 pub mod new;

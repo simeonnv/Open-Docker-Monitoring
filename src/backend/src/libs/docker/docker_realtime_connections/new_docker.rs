@@ -11,7 +11,7 @@ impl DockerRealtimeConnections {
         
         store_docker_connection(&docker_connection).await?;
         
-        self.insert(docker_connection.name.clone(), docker).await;
+        self.insert(docker_connection.name.clone(), docker_connection, docker).await;
         
         Ok(())    
 
