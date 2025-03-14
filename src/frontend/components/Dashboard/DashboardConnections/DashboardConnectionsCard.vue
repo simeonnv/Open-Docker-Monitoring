@@ -43,6 +43,10 @@
 
           <CardContent class="gap-2 flex flex-col">
 
+            <p>{{docker_connection.host}}</p>
+
+            <p>{{docker_connection.protocol}}</p>
+
             <div v-if="docker.containers">
                 <p v-if="docker.containers" ><span>Contianers:</span> {{ docker.containers }}</p>
                 <p v-if="docker.containers_running" class="text-muted-foreground"> - <span>Containers Running:</span> {{ docker.containers_running }}</p>
