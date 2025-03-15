@@ -25,10 +25,10 @@ const { selectedElement } = storeToRefs(useDashboardSidebarStore())
 </script>
 
 <template>
-  <div class="p-1 rounded-md m-4 transition-all duration-500 ease-in-out align-middle flex flex-row items-center justify-center">
+  <div class="p-1 rounded-md m-1 transition-all duration-500 ease-in-out align-middle flex flex-row items-center justify-center">
     <Button :class="selectedElement === element ? 'bg-muted' : ''" variant="ghost" @click="selectElement(element)" class="hover:transition-colors rounded-xl p-2 flex items-center gap-2 justify-center align-middle transition-all duration-500">
       <Icon :name="icon_name" class="w-6 h-6 text-primary"/>
-      <p class="text-primary font-bold">{{ text.charAt(0).toUpperCase() + text.slice(1) }}</p>
+      <p class="text-primary font-bold md:flex hidden">{{ text.charAt(0).toUpperCase() + text.slice(1) }}</p>
     </Button>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full flex flex-col align-middle w-full items-center pt-4">
+    <div class="h-full flex md:flex-col flex-row align-middle w-full items-center md:py-2">
 
         <DashboardDashboardSidebarElement icon_name="lucide:container" element="containers" text="containers" />
 

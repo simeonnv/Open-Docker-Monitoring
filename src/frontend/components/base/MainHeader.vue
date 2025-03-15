@@ -31,7 +31,7 @@
 
         <div v-auto-animate class="flex flex-col justify-center align-middle items-center">
             <div v-if="isHydrated && !isAuthRoute">
-                <SidebarPhone class="md:hidden" />
+                <LazySidebarPhone class="md:hidden" hydrate-on-interaction="mouseover"/>
             </div>
         </div>
 

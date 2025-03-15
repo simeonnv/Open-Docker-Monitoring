@@ -3,7 +3,7 @@
     <BaseMainHeader />
     <div class="flex-1 overflow-auto flex flex-row">
       <div v-auto-animate>
-        <SidebarPC v-if="!isAuthRoute" />
+        <LazySidebarPC v-if="!isAuthRoute" hydrate-on-interaction="mouseover"/>
       </div>
       <div class="flex-1 overflow-auto">
         <NuxtPage />

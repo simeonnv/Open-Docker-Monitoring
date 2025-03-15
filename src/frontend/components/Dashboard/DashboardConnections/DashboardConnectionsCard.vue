@@ -29,29 +29,30 @@ import Foldable from '@/components/ui/Foldable/Foldable.vue';
 
 
 <template>
-    <div class="p-4 w-fit">
-        {{ docker }}
-        {{ docker_connection }}
-        <Card class="hover:bg-muted transition-colors duration-500">
+        <Card>
           
-            <CardHeader class="flex flex-col gap-4 justify-center align-middle items-center">
-            <CardTitle class="flex flex-row gap-2"> 
-                <span>{{ props.name }}</span>
-                <span>{{ docker.server_version || "unknown version!" }}</span> 
-            </CardTitle>
-            <CardDescription>ID: {{ docker.id }}</CardDescription>
-          </CardHeader>
-
-
-          <CardContent class="gap-2 flex flex-col">
-            <Foldable text="Show more information">
-
+            <CardHeader class="px-8 py-6 flex flex-col gap-4">
                 
-            <p>Protocol: {{docker_connection.protocol}}</p>
+                <CardTitle class="flex flex-row text-primary gap-2 justify-center align-middle items-center"> 
+                    <span>{{ props.name }}</span>
+                    <span>{{ docker.server_version || "unknown version!" }}</span> 
+                </CardTitle>
 
-            <p>Host address: {{docker_connection.host}}</p>
+                <CardDescription class="text-text text-md">
 
-            <p>{{docker_connection.protocol}}</p>
+                    <p>ID: {{ docker.id }}</p>
+                
+                    <p>Protocol: {{docker_connection.protocol}}</p>
+
+                    <p>Host address: {{docker_connection.host}}</p>
+
+                </CardDescription>
+
+            </CardHeader>
+
+
+          <CardContent class="gap-1 flex flex-col">
+            <Foldable text="Show more information" class="text-muted-foreground">
 
             <div v-if="docker.containers !== undefined" class="flex flex-col">
                 <p v-if="docker.containers" >Contianers: {{ docker.containers }}</p>
@@ -75,5 +76,4 @@ import Foldable from '@/components/ui/Foldable/Foldable.vue';
             </Foldable>
           </CardContent>
         </Card>
-    </div>
 </template>

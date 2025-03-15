@@ -20,10 +20,10 @@ const { ready, start } = useTimeout(300, { controls: true })
 
 <template>
 
-    <div class="gap-2" v-auto-animate>
-        <Button @click="() => {if (ready) {folded = !folded; start()} }" variant="ghost" class="px-6 w-full flex-row flex p-0 m-0">
+    <div class="gap-1" v-auto-animate>
+        <Button @click="() => {if (ready) {folded = !folded; start()} }" variant="ghost" class="w-full flex-row flex p-0 m-0">
             
-            <div class="flex flex-row w-full">
+            <div class="flex flex-row w-full px-2">
                 
                 <p>{{ text }}</p>
                 
@@ -40,7 +40,9 @@ const { ready, start } = useTimeout(300, { controls: true })
         </Button>
             
         <div v-if="!folded">
-            <slot></slot>
+            <slot>
+
+            </slot>
         </div>
             
     </div>
