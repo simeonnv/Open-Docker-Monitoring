@@ -5,3 +5,4 @@ pub mod store_docker_connection;
 pub mod connect_to_docker;
 pub mod structs;
 pub mod docker_realtime_connections;
+pub mod check_docker_hearthbeat;

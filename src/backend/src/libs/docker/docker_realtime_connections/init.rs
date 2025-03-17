@@ -1,6 +1,6 @@
 use bollard::Docker;
 
-use crate::{error::Error, libs::docker::{connect_to_docker::connect_to_docker, get_docker_connections_db::get_docker_connections_db}};
+use crate::{error::Error, libs::docker::{check_docker_hearthbeat::check_docker_hearthbeat, connect_to_docker::connect_to_docker, get_docker_connections_db::get_docker_connections_db}};
 use super::DockerRealtimeConnections;
 
 
@@ -11,12 +11,14 @@ impl DockerRealtimeConnections {
 
         for docker_connection in docker_connections {
             
-            let docker: Docker = match connect_to_docker(&docker_connection).await {
-                Err(e) => { 
-                    print!("{}", e);
+            let docker: Docker = connect_to_docker(&docker_connection).await?;
+            
+            match check_docker_hearthbeat(&docker).await {
+                Ok(e) => e,
+                Err(e) => {
+                    self.connection_errors.write().await.insert(docker_connection.name.clone(), e.to_string());
                     continue
-                },
-                Ok(d) => d
+                }
             };
             
             self.insert(docker_connection.name.clone(),  docker_connection, docker).await;

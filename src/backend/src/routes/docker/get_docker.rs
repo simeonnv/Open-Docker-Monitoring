@@ -7,14 +7,13 @@ use utoipa::ToSchema;
 use crate::error::Error;
 use crate::libs::auth::auth_middleware::AccountData;
 use crate::libs::docker::docker_realtime_connections::REALTIME_CONNECTED_DOCKERS;
-use crate::libs::docker::structs::docker_connection::DockerConnection;
-use crate::libs::docker::structs::docker_info::DockerInfo;
+use crate::libs::docker::structs::docker_realtime_connection::DockerRealtimeConnection;
 
 #[derive(Serialize, Debug, ToSchema)]
 #[schema(as = Get::Docker::Res)]
 struct Res {
     status: &'static str,
-    data: HashMap<String, (DockerConnection, DockerInfo)>
+    data: HashMap<String, DockerRealtimeConnection>
 }
 
 

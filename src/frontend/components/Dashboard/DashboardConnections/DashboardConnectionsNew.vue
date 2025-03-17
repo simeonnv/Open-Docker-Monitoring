@@ -1,5 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { reactive, watch } from 'vue';
+const { addDocker } = useDockersStore();
+
 
 // Define the reactive form object
 const form = reactive({
@@ -13,7 +15,17 @@ watch(() => form.protocol, (newProtocol) => {
   if (newProtocol === 'local') {
     form.host = '';
   }
+
 });
+
+const error = ref("");
+
+const submit = async () => {
+    const { data, status } = await addDocker(form.name, form.host, form.protocol)
+    if (status !== "success")
+        error.value = status
+}
+
 </script>
 
 
@@ -30,6 +42,7 @@ watch(() => form.protocol, (newProtocol) => {
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
+
                 <div class="grid grid-cols-4 items-center gap-4">
                     <Label for="name" class="text-right">
                         Name
@@ -64,11 +77,18 @@ watch(() => form.protocol, (newProtocol) => {
                         </SelectContent>
                     </Select>
                 </div>
+
             </div>
+
+            <p class="text-rose-700 text-xl">Error: {{ error }}!</p>
+            
             <DialogFooter>
-                <Button @click="addDockerConnection">
+
+
+                <Button @click="submit">
                     Add new Docker
                 </Button>
+
             </DialogFooter>
         </DialogContent>
     </Dialog>

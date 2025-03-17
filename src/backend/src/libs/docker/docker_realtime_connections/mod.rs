@@ -7,6 +7,7 @@ use super::structs::docker_connection::DockerConnection;
 
 pub struct DockerRealtimeConnections {
     inner: Arc<RwLock<HashMap<String, (DockerConnection, Docker)>>>, //this is private and not indended to be read (stiga s toq OOP)
+    connection_errors: Arc<RwLock<HashMap<String, String>>>,
 }
 
 pub mod new;

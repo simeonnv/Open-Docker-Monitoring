@@ -1,22 +1,25 @@
 use std::collections::HashMap;
 
-use crate::{error::Error, libs::docker::structs::{docker_connection::DockerConnection, docker_info::DockerInfo}};
+use crate::{error::Error, libs::docker::{get_docker_connections_db::get_docker_connections_db, structs::docker_realtime_connection::DockerRealtimeConnection}};
 use super::DockerRealtimeConnections;
 
 impl DockerRealtimeConnections {
-    pub async fn list_dockers(&self) -> Result<HashMap<String, (DockerConnection, DockerInfo)>, Error> {
+    pub async fn list_dockers(&self) -> Result<HashMap<String, DockerRealtimeConnection>, Error> {
         let guard = self.inner.read().await;
+        let connection_error_guard = self.connection_errors.read().await;
         
-        let mut all_docker_data = HashMap::<String, (DockerConnection, DockerInfo)>::new();
-
-        for (name, (docker_connection_info, docker)) in guard.iter() {
-            let docker_data = match docker.info().await {
-                Err(e) => return Err(Error::Internal(format!("There was a error reading all dockers: {}", e))),
-                Ok(e) => e
-            };
-            all_docker_data.insert(name.clone(), (docker_connection_info.clone(), docker_data.into()));
+        let mut active_dockers = HashMap::<String, DockerRealtimeConnection>::new();
+        let all_dockers = get_docker_connections_db().await?;
+        
+        for docker_connection in all_dockers {
+            let connection_error = connection_error_guard.get(&docker_connection.name).cloned();
+            active_dockers.insert(docker_connection.name.clone(), DockerRealtimeConnection::from((docker_connection, false, connection_error)));
         }
 
-        Ok(all_docker_data)
+        for (name, (docker_connection, _)) in guard.iter() {
+            active_dockers.insert(name.clone(), DockerRealtimeConnection::from((docker_connection.clone(), true, None)));
+        }
+
+        Ok(active_dockers)
     }    
 }

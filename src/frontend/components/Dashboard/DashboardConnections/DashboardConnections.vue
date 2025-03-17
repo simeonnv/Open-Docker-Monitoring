@@ -11,13 +11,13 @@ const { dockers } = storeToRefs(useDockersStore());
       <DashboardDashboardConnectionsNew/>
     </div>
 
-    <!-- <ScrollArea class="h-full w-full rounded-md border"> -->
+    <ScrollArea class="h-full w-full rounded-md border py-5 gap-4">
       <div v-for="(docker, name) in dockers" :key="name" class="grid grid-cols-1 gap-6 px-8 w-full h-full items-start  justify-center align-middle">
 
         <DashboardDashboardConnectionsCard :docker="docker" :name="name" />
 
       </div>
-    <!-- </ScrollArea> -->
+    </ScrollArea>
     
   </div>
 </template>

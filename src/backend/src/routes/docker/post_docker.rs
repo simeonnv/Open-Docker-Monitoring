@@ -1,5 +1,5 @@
 
-use actix_web::{get, web, HttpMessage, HttpRequest, HttpResponse};
+use actix_web::{post, web, HttpMessage, HttpRequest, HttpResponse};
 use serde::{Deserialize, Serialize};
 use utoipa::ToSchema;
 
@@ -39,7 +39,7 @@ pub struct Req {
     ),
     tag = "Docker"
 )]
-#[get("")]
+#[post("")]
 async fn post_docker(
     token_data: HttpRequest,
     req: web::Json<Req>
