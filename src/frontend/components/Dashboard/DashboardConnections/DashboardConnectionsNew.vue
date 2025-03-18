@@ -13,17 +13,31 @@ const form = reactive({
 // Watch the protocol property and clear host when it changes to "local"
 watch(() => form.protocol, (newProtocol) => {
   if (newProtocol === 'local') {
-    form.host = '';
+    form.host = 'localhost';
   }
 
 });
 
 const error = ref("");
 
+const wait = (ms: number) => new Promise(resolve => {
+  useTimeoutFn(resolve, ms, { immediate: true });
+});
+
 const submit = async () => {
     const { data, status } = await addDocker(form.name, form.host, form.protocol)
-    if (status !== "success")
-        error.value = status
+    if (status !== "success") {
+        if (error.value === "") {
+            error.value = status
+            return
+        } else {
+            error.value = ""
+            await wait(310)
+            error.value = status
+            return
+        }
+
+    }
 }
 
 </script>
@@ -80,8 +94,10 @@ const submit = async () => {
 
             </div>
 
-            <p class="text-rose-700 text-xl">Error: {{ error }}!</p>
-            
+            <div v-auto-animate class="h-6 min-h-fit transition-all duration-500 ">
+                <p v-if="error" class="text-rose-700 text-sm">Error: {{ error }}!</p>
+            </div>
+
             <DialogFooter>
 
 

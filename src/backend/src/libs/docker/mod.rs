@@ -6,3 +6,4 @@ pub mod connect_to_docker;
 pub mod structs;
 pub mod docker_realtime_connections;
 pub mod check_docker_hearthbeat;
+pub mod remove_docker_connection_db;

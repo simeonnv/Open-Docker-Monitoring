@@ -38,7 +38,8 @@ impl Modify for BearerAuthAddon {
         routes::files::post_files::post_files,
 
         routes::docker::get_docker::get_docker,
-        routes::docker::post_docker::post_docker
+        routes::docker::post_docker::post_docker,
+        routes::docker::delete_docker_name::delete_docker_name,
         
     ),
     tags(

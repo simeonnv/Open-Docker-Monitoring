@@ -18,6 +18,7 @@ pub mod is_docker_active;
 pub mod list_containers_for_docker;
 pub mod list_containers_all;
 pub mod list_dockers;
+pub mod remove_docker;
 
 lazy_static! {
     pub static ref REALTIME_CONNECTED_DOCKERS: DockerRealtimeConnections = DockerRealtimeConnections::new();
