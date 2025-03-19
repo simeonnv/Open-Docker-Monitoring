@@ -70,7 +70,7 @@ export const useDockersStore = defineStore('dockers', {
                 },
             }).catch((error: any) => {
                 console.error('Add docker failed:', error);
-                // Use ?? to provide a fallback string, ensuring data is always a string
+                // Use ?? to provide a fallback string, ensuring data is always a string (real)
                 return {status: error.data.status ?? 'failed to add a new docker', data: ""} as AddDockerRes;
             });
         
@@ -82,6 +82,32 @@ export const useDockersStore = defineStore('dockers', {
         
             return { data, status } as AddDockerRes;
         },
+
+        async removeDocker(name: string) {
+            const config = useRuntimeConfig();
+            const token = useCookie('token');
+        
+            const response = await $fetch<AddDockerRes>(`${config.public.backendPublicAddress}:${config.public.backendPort}/docker/${name}`, {
+                method: 'delete',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token.value}`,
+                }
+            }).catch((error: any) => {
+                console.error('Remove docker failed:', error);
+                // Use ?? to provide a fallback string, ensuring data is always a string (real)
+                return {status: error.data.status ?? 'failed to remove docker', data: ""} as AddDockerRes;
+            });
+        
+            const { data, status } = response;
+        
+            if (status === 'success') {
+                await this.fetchDockers();
+            }
+        
+            return { data, status } as AddDockerRes;
+        },
+
 
         selectDocker(name: string) {
             this.selectedDocker = this.dockers[name] || null;

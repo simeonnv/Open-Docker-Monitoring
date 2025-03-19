@@ -19,6 +19,7 @@ watch(() => form.protocol, (newProtocol) => {
 });
 
 const error = ref("");
+const open = ref(false)
 
 const wait = (ms: number) => new Promise(resolve => {
   useTimeoutFn(resolve, ms, { immediate: true });
@@ -27,6 +28,7 @@ const wait = (ms: number) => new Promise(resolve => {
 const submit = async () => {
     const { data, status } = await addDocker(form.name, form.host, form.protocol)
     if (status !== "success") {
+
         if (error.value === "") {
             error.value = status
             return
@@ -37,6 +39,8 @@ const submit = async () => {
             return
         }
 
+    } else {
+        open.value = !open
     }
 }
 
@@ -44,7 +48,7 @@ const submit = async () => {
 
 
 <template>
-    <Dialog>
+    <Dialog v-model:open="open">
         <DialogTrigger as-child>
             <DashboardDashboardConnectionsNewTrigger />
         </DialogTrigger>
