@@ -83,11 +83,15 @@ export const useDockersStore = defineStore('dockers', {
             return { data, status } as AddDockerRes;
         },
 
+
         async removeDocker(name: string) {
             const config = useRuntimeConfig();
             const token = useCookie('token');
-        
-            const response = await $fetch<AddDockerRes>(`${config.public.backendPublicAddress}:${config.public.backendPort}/docker/${name}`, {
+            
+            // Encode the name to handle spaces and special characters
+            const encodedName = encodeURIComponent(name);
+            
+            const response = await $fetch<AddDockerRes>(`${config.public.backendPublicAddress}:${config.public.backendPort}/docker/${encodedName}`, {
                 method: 'delete',
                 headers: {
                     'Content-Type': 'application/json',
