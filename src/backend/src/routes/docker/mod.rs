@@ -6,6 +6,7 @@ use crate::libs::auth::auth_middleware::AuthMiddleware;
 pub mod get_docker;
 pub mod post_docker;
 pub mod delete_docker_name;
+pub mod get_docker_containers;
 
 pub fn docker() -> Scope<impl ServiceFactory<ServiceRequest, Config = (), Response = ServiceResponse, Error = Error, InitError = ()>> {
     web::scope("/docker")
@@ -14,4 +15,5 @@ pub fn docker() -> Scope<impl ServiceFactory<ServiceRequest, Config = (), Respon
         .service(get_docker::get_docker)
         .service(post_docker::post_docker)
         .service(delete_docker_name::delete_docker_name)
+        .service(get_docker_containers::get_docker_containers)
 }

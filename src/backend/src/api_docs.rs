@@ -40,6 +40,7 @@ impl Modify for BearerAuthAddon {
         routes::docker::get_docker::get_docker,
         routes::docker::post_docker::post_docker,
         routes::docker::delete_docker_name::delete_docker_name,
+        routes::docker::get_docker_containers::get_docker_containers
         
     ),
     tags(

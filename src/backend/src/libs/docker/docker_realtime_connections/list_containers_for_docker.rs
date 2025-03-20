@@ -1,9 +1,9 @@
-use bollard::{container::ListContainersOptions, secret::ContainerSummary};
-use crate::error::Error;
+use bollard::container::ListContainersOptions;
+use crate::{error::Error, libs::docker::structs::container_refined_summary::ContainerRefinedSummary};
 use super::DockerRealtimeConnections;
 
 impl DockerRealtimeConnections {
-    pub async fn list_containers_for_docker(&self, name: &String) -> Result<Vec<ContainerSummary>, Error> {
+    pub async fn list_containers_for_docker(&self, name: &String) -> Result<Vec<ContainerRefinedSummary>, Error> {
         let guard = self.inner.read().await;
         
         let (_, docker) = match guard.get(name) {
@@ -16,6 +16,13 @@ impl DockerRealtimeConnections {
             ..Default::default()
         };
 
-        Ok(docker.list_containers(Some(options)).await?)
+        let containers = docker.list_containers(Some(options)).await?
+            .into_iter()
+            .map(|i| {
+                i.into()
+            })
+            .collect();
+
+        Ok(containers)
     }    
 }

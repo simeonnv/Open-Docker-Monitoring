@@ -1,10 +1,10 @@
-use bollard::{container::ListContainersOptions, secret::ContainerSummary};
-use crate::error::Error;
+use bollard::container::ListContainersOptions;
+use crate::{error::Error, libs::docker::structs::container_refined_summary::ContainerRefinedSummary};
 use super::DockerRealtimeConnections;
 use tokio::task;
 
 impl DockerRealtimeConnections {
-    pub async fn list_containers_all(&self) -> Result<Vec<ContainerSummary>, Error> {
+    pub async fn list_containers_all(&self) -> Result<Vec<ContainerRefinedSummary>, Error> {
         let guard = self.inner.read().await;
 
         let options = ListContainersOptions::<String> {
@@ -41,6 +41,10 @@ impl DockerRealtimeConnections {
             }
         }
 
-        Ok(all_containers)
+        let all_refined_containers = all_containers.into_iter().map(|e| {
+            e.into()
+        }).collect();
+
+        Ok(all_refined_containers)
     }
 }

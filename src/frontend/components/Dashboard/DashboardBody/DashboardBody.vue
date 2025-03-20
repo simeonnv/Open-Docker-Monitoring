@@ -14,7 +14,7 @@ watch(selectedElement, (newVal) => console.log('selectedElement changed to:', ne
   <div class="w-full h-full flex relative">
     <Transition name="fade" mode="out-in">
       <div v-if="selectedElement === 'containers'" class="w-full h-full flex">
-        GUAH
+        <DashboardDashboardContainers/>
       </div>
       <div v-else-if="selectedElement === 'connections'" class="w-full h-full flex overflow-hidden">
         <DashboardDashboardConnections />
