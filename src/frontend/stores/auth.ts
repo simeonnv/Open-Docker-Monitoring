@@ -163,6 +163,8 @@ export const useAuthStore = defineStore('auth', {
     },
     async MainAccountExists(): Promise<boolean> {
       const config = useRuntimeConfig();
+      console.log("TEST1", config.public)
+      console.log("TEST2", `${config.public.backendPublicAddress}:${config.public.backendPort}/auth/exists`)
       const { data }: { data: boolean } = await $fetch<Responce | undefined>(`${config.public.backendPublicAddress}:${config.public.backendPort}/auth/exists`, {
         method: 'GET',
         retry: 3,
