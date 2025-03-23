@@ -1,7 +1,4 @@
-use std::collections::HashMap;
-
-use actix_web::{get, HttpMessage, HttpRequest, HttpResponse};
-use bollard::secret::ContainerSummary;
+`use actix_web::{get, HttpMessage, HttpRequest, HttpResponse};
 use serde::Serialize;
 use utoipa::ToSchema;
 
@@ -10,8 +7,8 @@ use crate::libs::auth::auth_middleware::AccountData;
 use crate::libs::docker::docker_realtime_connections::REALTIME_CONNECTED_DOCKERS;
 use crate::libs::docker::structs::container_refined_summary::ContainerRefinedSummary;
 
-#[derive(Serialize, Debug)]
-// #[schema(as = Get::Docker::Res)]
+#[derive(Serialize, Debug, ToSchema)]
+#[schema(as = Get::Docker::Containers::Res)]
 struct Res {
     status: &'static str,
     data: Vec<ContainerRefinedSummary>

@@ -26,7 +26,7 @@ const wait = (ms: number) => new Promise(resolve => {
 });
 
 const submit = async () => {
-    const { data, status } = await addDocker(form.name, form.host, form.protocol)
+    const { status } = await addDocker(form.name, form.host, form.protocol)
     if (status !== "success") {
 
         if (error.value === "") {
@@ -40,7 +40,7 @@ const submit = async () => {
         }
 
     } else {
-        open.value = !open
+        open.value = !open.value
     }
 }
 
